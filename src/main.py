@@ -33,16 +33,16 @@ except:
     print("You don't seem to have a valid pizza tower save file...")
 
 #We initialize the buttons and other stuff
-with dpg.window(tag="primary"):
+with dpg.window(tag="opensaveFile"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)
     dpg.add_radio_button(("Peppino", "Noise"), callback=_get_player, horizontal=True)
-    dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player))
+    dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player, savedatadir))
 
 
 #Finishing initialization by viewing our window
 dpg.show_viewport()
-dpg.set_primary_window("primary", True) #Setting it to primary
+dpg.set_primary_window("opensaveFile", True) #Setting it to primary
 dpg.start_dearpygui()
 
 #Destroying when closing

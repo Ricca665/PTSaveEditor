@@ -1,4 +1,4 @@
-def OpenRealFileName(saveFileNumber, player):
+def OpenRealFileName(saveFileNumber, player, savedatadir):
     TempsaveFile = ""
     print(saveFileNumber)
     print(player)
@@ -17,3 +17,6 @@ def OpenRealFileName(saveFileNumber, player):
     else:
         TempsaveFile = "saveData1.ini"  # fallback case if needed
     print(TempsaveFile)
+    with open(savedatadir+"/"+TempsaveFile, "w") as f:
+        saveFileContents = f.read()
+    return saveFileContents
