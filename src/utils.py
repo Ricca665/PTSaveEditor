@@ -1,16 +1,18 @@
 def OpenRealFileName(saveFileNumber, player):
     TempsaveFile = ""
+    print(saveFileNumber)
+    print(player)
     if saveFileNumber == "" or player == "" or saveFileNumber == "Save file 1":
         TempsaveFile = "saveData1.ini"
-    elif saveFileNumber == "Save file 2" and player == "Peppino":
+    if saveFileNumber == "Save file 2" and (player == "Peppino" or player == ""):
         TempsaveFile = "saveData2.ini"
-    elif saveFileNumber == "Save file 3" and player == "Peppino":
+    if saveFileNumber == "Save file 3" and (player == "Peppino" or player == ""):
         TempsaveFile = "saveData3.ini"
-    elif saveFileNumber == "Save file 1" and player == "Noise":
+    if saveFileNumber == "Save file 1" and player == "Noise":
         TempsaveFile = "saveData1N.ini"
-    elif saveFileNumber == "Save file 2" and player == "Noise":
+    if saveFileNumber == "Save file 2" and player == "Noise":
         TempsaveFile = "saveData2N.ini"
-    elif saveFileNumber == "Save file 3" and player == "Noise":
+    if saveFileNumber == "Save file 3" and player == "Noise":
         TempsaveFile = "saveData3N.ini"
     else:
         TempsaveFile = "saveData1.ini"  # fallback case if needed

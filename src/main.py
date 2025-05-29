@@ -20,7 +20,7 @@ def _get_player(sender, app_data, user_data):
 def _get_savefile_number(sender, app_data, user_data):
     global saveFile
     saveFile = app_data
-    return saveFile
+    return app_data
 
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
@@ -37,7 +37,7 @@ with dpg.window(tag="primary"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)
     dpg.add_radio_button(("Peppino", "Noise"), callback=_get_player, horizontal=True)
-    dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(_get_savefile_number, _get_player))
+    dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player))
 
 
 #Finishing initialization by viewing our window
