@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 import os
-import time
+import shutil
 import sys
 import configparser
 from utils import *
@@ -31,12 +31,19 @@ def fullscreen_window(sender, app_data, user_data):
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
+    currentdir = os.getcwd().replace("\\", "/")
+    backupdir = currentdir+"/backup"
+    if os.path.isdir(currentdir+"/backup"):
+        os.makedirs(currentdir+"/backup")
     os.chdir(savedatadir)
+    print(savedatadir)
+    print(backupdir)
+    shutil.copytree(savedatadir, backupdir)
     saves = os.listdir()
-    if not "saveData" in saves:
-        raise Exception
-except:
-    os.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\\"The saves folder does not exist,`Please generate it by opening pizza tower, entering a save`and completing the tutorial\\", \\"Error\\", \\"OK\\", \\"Error\\")"') # Show error box
+
+except Exception as e:
+    #os.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\\"The saves folder does not exist,`Please generate it by opening pizza tower, entering a save`and completing the tutorial\\", \\"Error\\", \\"OK\\", \\"Error\\")"') # Show error box
+    print(e)
     sys.exit(1)
 
 #We initialize the buttons and other stuff
