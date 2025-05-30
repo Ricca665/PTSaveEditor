@@ -47,10 +47,18 @@ with dpg.window(tag="opensaveFile"):
 
 with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_text(label="Select actions:")
-    dpg.add_button(label="Revive snotty", callback=lambda: ReviveSnotty())
-    dpg.add_button(label="Get P Rank in every level", callback=lambda: GetPRank())
-    dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
+    snotty = dpg.add_button(label="Revive snotty", callback=lambda: ReviveSnotty())
+    p_rank = dpg.add_button(label="Get P Rank in every level", callback=lambda: GetPRank())
+    cleanshit = dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
+
+    # Hover tooltips
+    with dpg.tooltip(parent=snotty):
+        dpg.add_text("Changes the snotty flag to revive")
+    with dpg.tooltip(parent=p_rank):
+        dpg.add_text("Sets the p rank flag for every level")
+    with dpg.tooltip(parent=cleanshit):
+        dpg.add_text("Removes garbage data that is not important\nBut that cause this tool to shit itself\nMods automatically regenerate these bytes")
 
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())

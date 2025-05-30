@@ -1,31 +1,33 @@
 import dearpygui.dearpygui as dpg
 import configparser
+import os
+
 config = configparser.ConfigParser()
 def OpenRealFileName(saveFileNumber, player, savedatadir):
     global saveFile
     TempsaveFile = ""
-    print(saveFileNumber)
-    print(player)
+
     if saveFileNumber == "" or player == "" or saveFileNumber == "Save file 1":
         TempsaveFile = "saveData1.ini"
-    if saveFileNumber == "Save file 2" and (player == "Peppino" or player == ""):
+    if saveFileNumber == "Save file 2":
         TempsaveFile = "saveData2.ini"
-    if saveFileNumber == "Save file 3" and (player == "Peppino" or player == ""):
+    if saveFileNumber == "Save file 3":
         TempsaveFile = "saveData3.ini"
     if saveFileNumber == "Save file 1" and player == "Noise":
         TempsaveFile = "saveData1N.ini"
-    if saveFileNumber == "Save file 2" and player == "Noise":
+    if saveFileNumber == "Save file 2" and player == 'Noise':
         TempsaveFile = "saveData2N.ini"
     if saveFileNumber == "Save file 3" and player == "Noise":
         TempsaveFile = "saveData3N.ini"
-    else:
-        TempsaveFile = "saveData1.ini"  # fallback case if needed
     saveFile = savedatadir+"/"+TempsaveFile
-    print(saveFile)
-    with open(saveFile, "r") as f:
-        saveFileContents = f.read()
-    dpg.set_value("file_contents", saveFileContents)
-    dpg.show_item("editSaveWindow")
+    try:
+        with open(saveFile, "r") as f:
+            saveFileContents = f.read()
+        dpg.set_value("file_contents", saveFileContents)
+        dpg.show_item("editSaveWindow")
+    except Exception:
+        os.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\\"The save file does not exist,`nor a unknown error has occurred\\", \\"Error\\", \\"OK\\", \\"Error\\")"') # Show error box
+
     return saveFile
 
 def ReviveSnotty():
