@@ -4,6 +4,7 @@ import shutil
 import sys
 import configparser
 from utils import *
+import errno
 
 config = configparser.ConfigParser()
 player = False
@@ -33,12 +34,14 @@ try:
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
     currentdir = os.getcwd().replace("\\", "/")
     backupdir = currentdir+"/backup"
-    if os.path.isdir(currentdir+"/backup"):
-        os.makedirs(currentdir+"/backup")
-    os.chdir(savedatadir)
-    print(savedatadir)
-    print(backupdir)
-    shutil.copytree(savedatadir, backupdir)
+    try:
+        os.makedirs(backupdir)
+        os.chdir(savedatadir)
+        shutil.copytree(savedatadir, backupdir, dirs_exist_ok=True)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            pass  # WINDOWS, I DON'T GIVE A GODDAMN FUCKING SHIT ABOUT THE DIRECTORY EXISTING, GET OUT!
+   
     saves = os.listdir()
 
 except Exception as e:
