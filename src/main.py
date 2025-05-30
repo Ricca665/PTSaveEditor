@@ -49,6 +49,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     dpg.add_text(label="Select actions:")
     dpg.add_button(label="Revive snotty", callback=lambda: ReviveSnotty())
     dpg.add_button(label="Get P Rank in every level", callback=lambda: GetPRank())
+    dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
 
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):

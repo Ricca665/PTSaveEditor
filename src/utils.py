@@ -29,16 +29,27 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
     return saveFile
 
 def ReviveSnotty():
-    pass
-def GetPRank():
-    with open(saveFile, "rb") as f: # opens the file
-        data = f.read()
-    
-    #This instruction is REQUIRED since pizza tower, for some reason, adds ending bytes to the end, this fixes the issue
-    saveFileCleaned = data.replace(b'\00', b'')  # Removes those bytes
+    CleanSaveFileGarbage()
+    config.read(saveFile)
+    config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
 
-    with open(saveFile, "wb") as f: # Write the clean save file
-        f.write(saveFileCleaned)
+def CleanSaveFileGarbage():
+    with open(saveFile, "rb") as f: # opens the file in byte mode
+        saveFileData = f.read()
+        
+    #These instruction are REQUIRED since some pizza tower mods, for some reason, adds garbage data, this fixes the issue
+    saveFileCleanData = saveFileData.replace(b'\00', b'') # Removes those bytes
+    with open(saveFile, "wb") as f:
+        f.write(saveFileCleanData)
+
+    with open(saveFile, "r") as f:
+        saveFileData = f.read()
+    
+    saveFileCleanData = saveFileData.replace("granny_garbage2N", "utf-8")
+    with open(saveFile, "w") as f:
+        f.write(saveFileCleanData)
+def GetPRank():
+    CleanSaveFileGarbage()
 
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
     
