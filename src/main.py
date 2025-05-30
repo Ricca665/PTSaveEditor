@@ -6,7 +6,7 @@ import configparser
 from utils import *
 
 config = configparser.ConfigParser()
-player = ""
+player = False
 saveFile = ""
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=750, height=700)
@@ -42,7 +42,7 @@ except:
 with dpg.window(tag="opensaveFile"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)
-    dpg.add_radio_button(("Peppino", "Noise"), callback=_get_player, horizontal=True)
+    dpg.add_checkbox(label="Noise", callback=_get_player)
     open_button = dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player, savedatadir))
     with dpg.tooltip(parent=open_button):
         dpg.add_text("Opens the selected save file for editing")

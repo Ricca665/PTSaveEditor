@@ -6,18 +6,20 @@ config = configparser.ConfigParser()
 def OpenRealFileName(saveFileNumber, player, savedatadir):
     global saveFile
     TempsaveFile = ""
-
+    print(player)
     if saveFileNumber == "" or player == "" or saveFileNumber == "Save file 1":
         TempsaveFile = "saveData1.ini"
     if saveFileNumber == "Save file 2":
         TempsaveFile = "saveData2.ini"
     if saveFileNumber == "Save file 3":
         TempsaveFile = "saveData3.ini"
-    if saveFileNumber == "Save file 1" and player == "Noise":
+
+    #True at the end means that the noise checkbox is checked
+    if player:
         TempsaveFile = "saveData1N.ini"
-    if saveFileNumber == "Save file 2" and player == 'Noise':
+    if saveFileNumber == "Save file 2" and player == True:
         TempsaveFile = "saveData2N.ini"
-    if saveFileNumber == "Save file 3" and player == "Noise":
+    if saveFileNumber == "Save file 3" and player == True:
         TempsaveFile = "saveData3N.ini"
     saveFile = savedatadir+"/"+TempsaveFile
     try:
