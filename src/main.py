@@ -36,7 +36,8 @@ try:
     if not "saveData" in saves:
         raise Exception
 except:
-    print("You don't seem to have a valid pizza tower save file...")
+    os.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\\"The saves folder does not exist,`Please generate it by opening pizza tower, entering a save`and completing the tutorial\\", \\"Error\\", \\"OK\\", \\"Error\\")"') # Show error box
+
 
 #We initialize the buttons and other stuff
 with dpg.window(tag="opensaveFile"):

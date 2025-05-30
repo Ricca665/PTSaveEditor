@@ -6,7 +6,7 @@ config = configparser.ConfigParser()
 def OpenRealFileName(saveFileNumber, player, savedatadir):
     global saveFile
     TempsaveFile = ""
-    print(player)
+
     if saveFileNumber == "" or saveFileNumber == "Save file 1":
         TempsaveFile = "saveData1.ini"
     if saveFileNumber == "Save file 2":
@@ -76,7 +76,7 @@ def OpenRAWEditor():
 def OpenMainScreen():
     save = dpg.get_value("file_contents")
     save = str(save)  # Convert to string just in case
-    print(save)
+    
     with open(saveFile, "r+") as f:
         f.write(save)
         f.truncate()
