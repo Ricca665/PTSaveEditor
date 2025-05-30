@@ -9,7 +9,7 @@ config = configparser.ConfigParser()
 player = ""
 saveFile = ""
 dpg.create_context()
-dpg.create_viewport(title="YA ADB/Fastboot GUI", width=750, height=700)
+dpg.create_viewport(title="PT Save File Editor", width=750, height=700)
 dpg.setup_dearpygui()
 
 def _get_player(sender, app_data, user_data):
@@ -21,6 +21,12 @@ def _get_savefile_number(sender, app_data, user_data):
     global saveFile
     saveFile = app_data
     return app_data
+
+def fullscreen_window(sender, app_data, user_data):
+    width, height = dpg.get_viewport_client_width(), dpg.get_viewport_client_height()
+    dpg.set_item_width(user_data, width)
+    dpg.set_item_height(user_data, height)
+    dpg.set_item_pos(user_data, (0, 0))  # Top-left corner
 
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
@@ -39,10 +45,27 @@ with dpg.window(tag="opensaveFile"):
     dpg.add_radio_button(("Peppino", "Noise"), callback=_get_player, horizontal=True)
     dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player, savedatadir))
 
+with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
+    dpg.add_text(label="Select actions:")
+    dpg.add_button(label="Revive snotty", callback=lambda: ReviveSnotty())
+    dpg.add_button(label="Get P Rank in every level", callback=lambda: GetPRank())
+    dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
 
-#Finishing initialization by viewing our window
+with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
+    dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())
+    dpg.add_input_text(tag="file_contents", multiline=True, width=700, height=600)
+    dpg.set_value("file_contents", saveFile)
+
+
+#Finishing initialization
 dpg.show_viewport()
 dpg.set_primary_window("opensaveFile", True) #Setting it to primary
+dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
+dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
+
+#Once at startup
+fullscreen_window(None, None, "editSaveWindow")
+fullscreen_window(None, None, "rawEditor")
 dpg.start_dearpygui()
 
 #Destroying when closing
