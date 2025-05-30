@@ -7,7 +7,7 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
     global saveFile
     TempsaveFile = ""
     print(player)
-    if saveFileNumber == "" or player == "" or saveFileNumber == "Save file 1":
+    if saveFileNumber == "" or saveFileNumber == "Save file 1":
         TempsaveFile = "saveData1.ini"
     if saveFileNumber == "Save file 2":
         TempsaveFile = "saveData2.ini"
@@ -16,11 +16,8 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
 
     #True at the end means that the noise checkbox is checked
     if player:
-        TempsaveFile = "saveData1N.ini"
-    if saveFileNumber == "Save file 2" and player == True:
-        TempsaveFile = "saveData2N.ini"
-    if saveFileNumber == "Save file 3" and player == True:
-        TempsaveFile = "saveData3N.ini"
+        TempsaveFile = TempsaveFile.replace(".ini", "")
+        TempsaveFile = TempsaveFile + "N.ini"
     saveFile = savedatadir+"/"+TempsaveFile
     try:
         with open(saveFile, "r") as f:
