@@ -50,22 +50,16 @@ def CleanSaveFileGarbage():
     with open(saveFile, "w") as f:
         f.write(saveFileCleanData)
 
-def GetPRank():
+
+def SetRanks(level, rank, gerome, secrets):
     CleanSaveFileGarbage()
 
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
     
-    level_list = ["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
-                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
-                  "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"]
-    
     with open(saveFile, "r") as f:
         saveFileContents = f.readlines() # Reads every line of the file
     
-    for level in level_list:
-        config["Ranks"][level] = '"p"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
+    config["Ranks"][level] = '"p"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
     
     with open(saveFile, "w") as configfile: # Rewrites the save file back
         config.write(configfile)

@@ -9,6 +9,11 @@ import errno
 config = configparser.ConfigParser()
 player = False
 saveFile = ""
+level = "entrance"
+secrets = 0
+doGerome = False
+rank = "p"
+
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
 dpg.setup_dearpygui()
@@ -22,6 +27,26 @@ def _get_savefile_number(sender, app_data, user_data):
     global saveFile
     saveFile = app_data
     return app_data
+
+def _get_level(sender, app_data, user_data):
+    global level
+    level = app_data
+    print(level)
+
+def _get_secrets(sender, app_data):
+    global secrets
+    secrets = app_data
+    print(secrets)
+
+def _get_gerome(sender, app_data):
+    global doGerome
+    doGerome = app_data
+    print(doGerome)
+
+def _get_rank(sender, app_data):
+    global rank
+    rank = app_data
+    print(rank)
 
 def fullscreen_window(sender, app_data, user_data):
     width, height = dpg.get_viewport_client_width(), dpg.get_viewport_client_height()
@@ -84,10 +109,13 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
                   "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
                   "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"], callback=_get_player)
-    dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3)
-    dpg.add_checkbox(label="Gerome treasure")
+                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
+
+    dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3, callback=_get_secrets)
+    dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
     dpg.add_spacer(height=50)
+    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(_get_level, _get_rank, _get_gerome, _get_secrets))
 
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
