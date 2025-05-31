@@ -32,6 +32,14 @@ MANIFEST
 *.manifest
 *.spec
 
+# Nuitka
+main.build/
+main.dist/
+main.onefile-build/
+main.exe
+backup/
+PTSaveEditor.exe
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
