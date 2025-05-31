@@ -40,7 +40,7 @@ try:
         shutil.copytree(savedatadir, backupdir, dirs_exist_ok=True)
     except OSError as e:
         if e.errno == errno.EEXIST:
-            pass  # WINDOWS, I DON'T GIVE A GODDAMN FUCKING SHIT ABOUT THE DIRECTORY EXISTING, GET OUT!
+            pass  # WINDOWS, I DON'T GIVE A GODDAMN FUCKING SHIT ABOUT THE DIRECTORY EXISTING, GET GET GET OUT! 
    
     saves = os.listdir()
 
