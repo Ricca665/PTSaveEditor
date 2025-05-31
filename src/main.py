@@ -85,6 +85,10 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
                   "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_player)
+    dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3)
+    dpg.add_checkbox(label="Gerome treasure")
+    dpg.add_spacer(height=50)
+
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
