@@ -1,3 +1,5 @@
+echo off
+cls
 echo "Step 1/2: Installing required libs (dearpygui, pyinstaller)"
 pip install dearpygui pyinstaller
 
