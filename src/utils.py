@@ -55,9 +55,6 @@ def SetRanks(level, rank, gerome, secrets):
     CleanSaveFileGarbage()
 
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
-    
-    with open(saveFile, "r") as f:
-        saveFileContents = f.readlines() # Reads every line of the file
 
     config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
     
