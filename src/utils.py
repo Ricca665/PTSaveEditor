@@ -85,7 +85,6 @@ def OpenRAWEditor():
 def showFriendlyNames(sender, app_data):
     if dpg.is_item_shown("friendly_names"):
         dpg.hide_item("friendly_names")
-        
     else:
         dpg.show_item("friendly_names")
 
