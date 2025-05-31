@@ -31,22 +31,22 @@ def _get_savefile_number(sender, app_data, user_data):
 def _get_level(sender, app_data, user_data):
     global level
     level = app_data
-    print(level)
+    return level
 
 def _get_secrets(sender, app_data):
     global secrets
     secrets = app_data
-    print(secrets)
+    return level
 
 def _get_gerome(sender, app_data):
     global doGerome
     doGerome = app_data
-    print(doGerome)
+    return doGerome
 
 def _get_rank(sender, app_data):
     global rank
     rank = app_data
-    print(rank)
+    return rank
 
 def fullscreen_window(sender, app_data, user_data):
     width, height = dpg.get_viewport_client_width(), dpg.get_viewport_client_height()
@@ -115,7 +115,7 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3, callback=_get_secrets)
     dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
     dpg.add_spacer(height=50)
-    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(_get_level, _get_rank, _get_gerome, _get_secrets))
+    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets))
 
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):

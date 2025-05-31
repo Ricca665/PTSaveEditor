@@ -58,7 +58,7 @@ def SetRanks(level, rank, gerome, secrets):
     
     with open(saveFile, "r") as f:
         saveFileContents = f.readlines() # Reads every line of the file
-    
+
     config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
     
     with open(saveFile, "w") as configfile: # Rewrites the save file back
