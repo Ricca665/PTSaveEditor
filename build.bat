@@ -1,9 +1,10 @@
 echo off
 cls
-echo "Step 1/2: Installing required libs (dearpygui, pyinstaller)"
-pip install dearpygui pyinstaller
+echo "Step 1/2: Installing required libs (dearpygui, py2exe)"
+pip install dearpygui nuitka
 
 echo "Step 2/2: Compiling code into executable..."
-pyinstaller --onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean
+nuitka --standalone --onefile src/main.py
 
 echo "Done! Check for any errors during compilation and/or libs installing"
+pause
