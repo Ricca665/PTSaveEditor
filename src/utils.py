@@ -57,7 +57,15 @@ def SetRanks(level, rank, gerome, secrets):
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
 
     config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
-    
+    if gerome:
+        config["Treasure"][str(level)] = f'"{str(1.000000)}"'
+    else:
+        config["Treasure"][str(level)] = f'"{str(0.000000)}"'  
+
+    if secrets > 0:
+        config["Secret"][str(level)] = f'"{str(secrets)}"'
+    else:
+        config["Secret"][str(level)] = f'"{str(0)}"'
     with open(saveFile, "w") as configfile: # Rewrites the save file back
         config.write(configfile)
 
