@@ -2,7 +2,7 @@ import os
 import subprocess
 
 """Compiler options"""
-libs = ["dearpygui", "pyinstaller"] # Required libraries 
+libs = ["dearpygui", "pyinstaller", "pymsgbox"] # Required libraries 
 compiler = "pyinstaller" # Compiler
 compiler_flags = ' --onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean' # Compiler flags
 

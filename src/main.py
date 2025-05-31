@@ -5,6 +5,7 @@ import sys
 import configparser
 from utils import *
 import errno
+import pymsgbox
 
 config = configparser.ConfigParser()
 player = False
@@ -70,11 +71,20 @@ try:
     saves = os.listdir()
 
 except Exception as e:
-    os.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\\"The saves folder does not exist,`Please generate it by opening pizza tower, entering a save`and completing the tutorial\\", \\"Error\\", \\"OK\\", \\"Error\\")"') # Show error box
-    print(e)
-    sys.exit(1)
+    # The following line basically tells it to create a error popup window
+    pymsgbox.alert("""The saves folder does not exist or an unknown error has occured.\n
+                   Please generate it by opening pizza tower, entering a save\nand
+                   completing the tutorial""", "An error has occured!")
+    print(e) # Print error
+    sys.exit(1) # Exit
 
 #We initialize the buttons and other stuff
+#Tag means how internally it references itself
+#Show means to not show it at startup
+#No collapse means don't show the collapse button
+#No close means don't show the close button
+#No title bar means to not show the titlebar
+#No move means that you can't move the window 
 with dpg.window(tag="opensaveFile"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)
