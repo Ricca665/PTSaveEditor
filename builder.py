@@ -3,8 +3,8 @@ import subprocess
 
 """Compiler options"""
 libs = ["dearpygui", "nuitka"]
-compiler = "nuitka"
-compiler_flags = " --standalone --onefile --output-filename=PTSaveEditor.exe src/main.py"
+compiler = "pyinstaller"
+compiler_flags = ' --onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean'
 
 
 print("Step 1/2: installing required libs")
