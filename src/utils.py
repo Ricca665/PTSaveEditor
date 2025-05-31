@@ -46,9 +46,10 @@ def CleanSaveFileGarbage():
     with open(saveFile, "r") as f:
         saveFileData = f.read()
     
-    saveFileCleanData = saveFileData.replace("granny_garbage2N", "utf-8")
+    saveFileCleanData = saveFileData.replace("granny_garbage2N", "utf-8") # This is useless... ESPECIALLY for the Peppino save file
     with open(saveFile, "w") as f:
         f.write(saveFileCleanData)
+
 def GetPRank():
     CleanSaveFileGarbage()
 
@@ -69,9 +70,24 @@ def GetPRank():
     with open(saveFile, "w") as configfile: # Rewrites the save file back
         config.write(configfile)
 
+def showRankScreen():
+    dpg.hide_item("editSaveWindow")
+    dpg.show_item("rankSetter")
+
+def hideRankScreen():
+    dpg.hide_item("rankSetter")
+    dpg.show_item("editSaveWindow")
+
 def OpenRAWEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("rawEditor")
+
+def showFriendlyNames(sender, app_data):
+    if dpg.is_item_shown("friendly_names"):
+        dpg.hide_item("friendly_names")
+        
+    else:
+        dpg.show_item("friendly_names")
 
 def OpenMainScreen():
     save = dpg.get_value("file_contents")
