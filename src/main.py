@@ -64,7 +64,6 @@ def _get_lapping(sender, app_data):
 
 def _get_score(sender, app_data):
     global score
-    print(app_data)
     score = app_data
     return app_data
 
