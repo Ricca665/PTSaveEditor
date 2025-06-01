@@ -13,7 +13,10 @@ saveFile = ""
 level = "entrance"
 secrets = 0
 doGerome = False
+lunatic = False
 rank = "p"
+lap = "lap3"
+score = 0
 
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
@@ -48,6 +51,22 @@ def _get_rank(sender, app_data):
     global rank
     rank = app_data
     return rank
+
+def _get_lunatic(sender, app_data):
+    global lunatic
+    lunatic = app_data
+    return app_data
+
+def _get_lapping(sender, app_data):
+    global lap
+    lap = app_data
+    return app_data
+
+def _get_score(sender, app_data):
+    global score
+    print(app_data)
+    score = app_data
+    return app_data
 
 def fullscreen_window(sender, app_data, user_data):
     width, height = dpg.get_viewport_client_width(), dpg.get_viewport_client_height()
@@ -99,11 +118,11 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     p_rank = dpg.add_button(label="Set rank for level(s)", callback=lambda: showRankScreen())
     cleanshit = dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
-    lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
+    #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
 
     # Hover tooltips
-    with dpg.tooltip(parent=lhpp):
-        dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
+    #with dpg.tooltip(parent=lhpp):
+     #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
     with dpg.tooltip(parent=snotty):
         dpg.add_text("Changes the snotty flag to revive")
     with dpg.tooltip(parent=p_rank):
@@ -124,11 +143,11 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_level)
     dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
-
+    dpg.add_input_float(label="Score", callback=_get_score)
     dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3, callback=_get_secrets)
     dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
     dpg.add_spacer(height=50)
-    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets))
+    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets, score))
 
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
@@ -136,15 +155,18 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
 
 with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
-                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
-                  "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
+    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon",
+                  "badland", "graveyard", "farm", "saloon", "b_vigilante",
+                  "pizzarush", "trickytreat", "entrway", "exit", "chateau",
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_level)
-    dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
+    
+    dpg.add_combo(label="Rank to set to", items=["p", "s"], callback=lambda:_get_rank)
 
+    dpg.add_combo(label="Lapping", items=["lap5", "lap4", "lap3"], callback=lambda:_get_lapping)
+    dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunatic)
     dpg.add_spacer(height=50)
-    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets))
+    #dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, lunatic, lap))
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")

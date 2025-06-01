@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 import configparser
-import os
+import re
 import pymsgbox
 
 config = configparser.ConfigParser()
@@ -40,22 +40,40 @@ def ReviveSnotty():
 def CleanSaveFileGarbage():
     with open(saveFile, "rb") as f: # opens the file in byte mode
         saveFileData = f.read() # Read the file
-        
+
     #These instruction are REQUIRED since some pizza tower mods, for some reason, add garbage data at 
     #the end of the file, causing this tool to shit itself, this fixes the issue
     saveFileCleanData = saveFileData.replace(b'\00', b'') # Removes those bytes
+
     with open(saveFile, "wb") as f:
         f.write(saveFileCleanData)
 
     with open(saveFile, "r") as f:
         saveFileData = f.read()
     
-    saveFileCleanData = saveFileData.replace("granny_garbage2N", "utf-8") # This is useless... ESPECIALLY for the Peppino save file
+    saveFileCleanData = saveFileData
+    saveFileCleanData = saveFileCleanData.replace("granny_garbage2N", "")
+    saveFileCleanData = saveFileCleanData.replace('granny_forest1N="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_hubtips7N="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage7N="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage1N="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage5N="0.000000"', "")
+    saveFileCleanData = re.sub(r'(?m)^\s*="0\s*\n?', '', saveFileCleanData)
+    saveFileCleanData = re.sub(r'(?m)^\s*.000000"\s*\n?', '', saveFileCleanData)
+    # So basically lap 3 deluxe is very intelligent, if you get catched more than one time by l3dxQnVybnRmYWNl
+    # It writes it n times you have been catched
+    # This just adds ONE of it
+    #saveFileCleanData = re.sub(r'l3dxqnvybnrmywnl="1\.000000"', '', saveFileCleanData)
+    #saveFileCleanData += '\nl3dxQnVybnRmYWNl="1.000000"
+    # need to fix this, it places it in the wrong line :/
+
     with open(saveFile, "w") as f:
         f.write(saveFileCleanData)
+    
+    
 
 
-def SetRanks(level, rank, gerome, secrets):
+def SetRanks(level, rank, gerome, secrets, score):
     CleanSaveFileGarbage()
 
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
@@ -72,9 +90,18 @@ def SetRanks(level, rank, gerome, secrets):
     else:
         config["Secret"][str(level)] = f'"{str(0)}"'
 
+    config["Highscore"][str(level)] = f'"{str(score)}"'
+
     with open(saveFile, "w") as configfile: # Opens the file
         config.write(configfile) # Writes it back
 
+def lhppSetRanks(level, rank, lunatic, lapping):
+    CleanSaveFileGarbage()
+
+    config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
+
+    #config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
+    
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
 def showRankScreen():
