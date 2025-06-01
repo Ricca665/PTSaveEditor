@@ -105,3 +105,7 @@ def OpenMainScreen():
     
     dpg.hide_item("rawEditor") # Hides the editor
     dpg.show_item("editSaveWindow") # Shows the main menu
+
+def showLHPPEditor():
+    dpg.hide_item("editSaveWindow")
+    dpg.show_item("lhppSaveEditor")

@@ -99,8 +99,11 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     p_rank = dpg.add_button(label="Set rank for level(s)", callback=lambda: showRankScreen())
     cleanshit = dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
+    lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
 
     # Hover tooltips
+    with dpg.tooltip(parent=lhpp):
+        dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
     with dpg.tooltip(parent=snotty):
         dpg.add_text("Changes the snotty flag to revive")
     with dpg.tooltip(parent=p_rank):
@@ -179,11 +182,13 @@ dpg.set_primary_window("opensaveFile", True) #Setting it to primary
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "rankSetter"))
+dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveEditor"))
 
 #Once at startup
 fullscreen_window(None, None, "editSaveWindow")
 fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")
+fullscreen_window(None, None, "lhppSaveEditor")
 dpg.start_dearpygui()
 
 #Destroying when closing
