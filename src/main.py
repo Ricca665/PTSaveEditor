@@ -131,6 +131,22 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
 
+with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
+    dpg.add_button(label="Return to main screen", callback=hideRankScreen)
+    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
+                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
+                  "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
+                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
+                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
+
+    dpg.add_spacer(height=50)
+    dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets))
+    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
+    with dpg.tooltip(parent=friendly_names):
+        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
+
+
 with dpg.window(tag="friendly_names", show=False):
     dpg.add_text("entrance = John Gutter")
     dpg.add_text("medieval = Pizzascape")
