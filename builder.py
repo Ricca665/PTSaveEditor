@@ -6,6 +6,7 @@ libs = ["dearpygui", "pyinstaller", "pymsgbox"] # Required libraries
 compiler = "pyinstaller" # Compiler
 compiler_flags = ' --onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean' # Compiler flags
 
+os.chdir(os.path.dirname(os.path.realpath(__file__))) # Enters the current directory where the builder is found, this fixes the "Script file 'src/main.py' does not exist." error when compiling
 
 print("Step 1/2: installing required libs")
 for lib in libs: # For each library
