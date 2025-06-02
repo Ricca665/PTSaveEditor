@@ -36,6 +36,8 @@ def ReviveSnotty():
     CleanSaveFileGarbage() # Cleans the garbage data at the end
     config.read(saveFile) # Reads the file
     config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
+    with open(saveFile, "w") as configfile: # Opens the file
+        config.write(configfile) # Writes it back
 
 def CleanSaveFileGarbage():
     with open(saveFile, "rb") as f: # opens the file in byte mode
@@ -69,9 +71,23 @@ def CleanSaveFileGarbage():
 
     with open(saveFile, "w") as f:
         f.write(saveFileCleanData)
-    
-    
 
+def l3dxSetRanks(level, rank, keys):
+    CleanSaveFileGarbage()
+
+    config.read(saveFile)
+    level = str(level)+"6"
+    print(keys)
+    config["Lapped3"][level] = f'"2.000000"'
+    config["3Rank"][level] = f'"{rank}"'
+
+    if keys:
+        config["LapKey"][level] = f'"1.000000"'
+    else:
+        config["LapKey"][level] = f'"0.000000"'
+
+    with open(saveFile, "w") as configfile: # Opens the file
+        config.write(configfile) # Writes it back
 
 def SetRanks(level, rank, gerome, secrets, score):
     CleanSaveFileGarbage()
@@ -136,3 +152,8 @@ def OpenMainScreen():
 def showLHPPEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("lhppSaveEditor")
+
+
+def showL3DXEditor():
+    dpg.hide_item("editSaveWindow")
+    dpg.show_item("l3dxSaveEditor")
