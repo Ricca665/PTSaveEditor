@@ -156,7 +156,7 @@ def showLHPPEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("lhppSaveEditor")
 
-
 def showL3DXEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("l3dxSaveEditor")
+    
