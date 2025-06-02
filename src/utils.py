@@ -34,8 +34,10 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
 
 def ReviveSnotty():
     CleanSaveFileGarbage() # Cleans the garbage data at the end
+    
     config.read(saveFile) # Reads the file
     config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
+
     with open(saveFile, "w") as configfile: # Opens the file
         config.write(configfile) # Writes it back
 
@@ -76,13 +78,14 @@ def l3dxSetRanks(level, rank, keys):
     CleanSaveFileGarbage()
 
     config.read(saveFile)
-    level = str(level)+"6"
-    print(keys)
+    level = str(level)+"6" # L3DX saves the data for each level as level+6 and then the value
+                           # By doing this we are doing it just once
+
     config["Lapped3"][level] = f'"2.000000"'
-    config["3Rank"][level] = f'"{rank}"'
+    config["3Rank"][level] = f'"{rank}"' # Rank
 
     if keys:
-        config["LapKey"][level] = f'"1.000000"'
+        config["LapKey"][level] = f'"1.000000"' # The keys for each level are saved separately
     else:
         config["LapKey"][level] = f'"0.000000"'
 
