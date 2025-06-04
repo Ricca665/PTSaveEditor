@@ -35,6 +35,9 @@ MANIFEST
 # My testing
 tests/
 
+# My output folder
+output/
+
 # Nuitka
 main.build/
 main.dist/

@@ -37,9 +37,9 @@ try:
     os.makedirs("output")
 except:
     pass
-shutil.copyfile("dist/PTSaveFileEditor.exe", "output/PTSaveFileEditor.exe")
-os.chdir("output")
-zip = zipfile.ZipFile(f"PTSaveFileEditorV{version_number}.zip", "w", zipfile.ZIP_DEFLATED)
+os.chdir("dist")
+zip = zipfile.ZipFile(f"../output/PTSaveFileEditorV{version_number}.zip", "w", zipfile.ZIP_DEFLATED)
 zip.write("PTSaveFileEditor.exe")
+zip.close()
 
 print("Done! Check for any errors")
