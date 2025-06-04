@@ -145,7 +145,7 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
                   "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
-                  "b_fakepep", "pizzarush", "trickytreat", "entrway", "exit", "chateau",
+                  "b_fakepep", "trickytreat", "entrway", "exit", "chateau",
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_level)
     dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
@@ -181,8 +181,8 @@ with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=Tru
 with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon",
-                  "badland", "graveyard", "farm", "saloon", "b_vigilante",
-                  "pizzarush", "trickytreat", "entrway", "exit", "chateau",
+                  "badland", "graveyard", "farm", "saloon",
+                  "trickytreat", "entrway", "exit", "chateau",
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_level)
     

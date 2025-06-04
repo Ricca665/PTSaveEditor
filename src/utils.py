@@ -2,6 +2,7 @@ import dearpygui.dearpygui as dpg
 import configparser
 import re
 import pymsgbox
+import linecache
 
 config = configparser.ConfigParser()
 def OpenRealFileName(saveFileNumber, player, savedatadir):
@@ -54,21 +55,35 @@ def CleanSaveFileGarbage():
 
     with open(saveFile, "r") as f:
         saveFileData = f.read()
+        
     
     saveFileCleanData = saveFileData
-    saveFileCleanData = saveFileCleanData.replace("granny_garbage2N", "")
+    # Some noise shit
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_forest1N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_hubtips7N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage7N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage1N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage5N="0.000000"', "")
+    
+    # Some of my mess
+    # In previous versions of the tool because of the replace shenanigans
+    # Above me, it deleted part of the string
+    # This removes that
     saveFileCleanData = re.sub(r'(?m)^\s*="0\s*\n?', '', saveFileCleanData)
     saveFileCleanData = re.sub(r'(?m)^\s*.000000"\s*\n?', '', saveFileCleanData)
-    # So basically lap 3 deluxe is very intelligent, if you get catched more than one time by l3dxQnVybnRmYWNl
+
+    # So basically lap 3 deluxe is very intelligent, if you get catched more than one time by QnVybnRmYWNl
     # It writes it n times you have been catched
     # This just adds ONE of it
-    #saveFileCleanData = re.sub(r'l3dxqnvybnrmywnl="1\.000000"', '', saveFileCleanData)
-    #saveFileCleanData += '\nl3dxQnVybnRmYWNl="1.000000"
+    l3dxstring = "l3dxqnvybnrmywnl"
+    saveFileLines = saveFileCleanData.splitlines()
+    didFindString = False
+    for i in saveFileLines:
+        if l3dxstring in i:
+            if not didFindString:
+                didFindString = True
+                saveFileCleanData = saveFileCleanData.replace(i, "")
     # need to fix this, it places it in the wrong line :/
 
     with open(saveFile, "w") as f:
