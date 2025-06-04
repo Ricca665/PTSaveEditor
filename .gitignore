@@ -32,6 +32,9 @@ MANIFEST
 *.manifest
 *.spec
 
+# My testing
+tests/
+
 # Nuitka
 main.build/
 main.dist/
