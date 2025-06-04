@@ -122,7 +122,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     dpg.add_text(label="Select actions:")
     snotty = dpg.add_button(label="Revive snotty", callback=lambda: ReviveSnotty())
     p_rank = dpg.add_button(label="Set rank for level(s)", callback=lambda: showRankScreen())
-    cleanshit = dpg.add_button(label="Clean save file ending garbage", callback=lambda: CleanSaveFileGarbage())
+    cleanshit = dpg.add_button(label="Clean save file garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
     #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
     l3dx = dpg.add_button(label="Edit l3dx save file", callback=lambda: showL3DXEditor())
