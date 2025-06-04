@@ -10,7 +10,7 @@ compiler_flags = '--onefile --windowed src/main.py --name="PTSaveFileEditor.exe"
 libs = ["dearpygui", compiler, "pymsgbox"] # Required libraries 
 
 
-version_number = "3" # The version number of the program
+version_number = "4" # The version number of the program
 
 os.chdir(os.path.dirname(os.path.realpath(__file__))) # Enters the current directory where the builder is found, this fixes the "Script file 'src/main.py' does not exist." error when compiling
 try:
