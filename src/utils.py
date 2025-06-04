@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 import configparser
 import re
 import pymsgbox
-import linecache
+import sys
 
 config = configparser.ConfigParser()
 def OpenRealFileName(saveFileNumber, player, savedatadir):
@@ -174,4 +174,9 @@ def showLHPPEditor():
 def showL3DXEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("l3dxSaveEditor")
-    
+
+if __name__ == "__main__":
+    print("You are NOT supposed to run this directly!")
+    print("Either run main.py or the compiled executable!")
+    input()
+    sys.exit()
