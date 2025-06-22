@@ -10,7 +10,7 @@ import pymsgbox
 config = configparser.ConfigParser()
 player = False
 saveFile = ""
-level = "entranca"
+level = "entrance"
 secrets = 0
 doGerome = False
 lunatic = False
