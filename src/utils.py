@@ -28,8 +28,9 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
             saveFileContents = f.read() # Tries to read the file
         dpg.set_value("file_contents", saveFileContents)
         dpg.show_item("editSaveWindow")
-    except Exception: # In case it can't
-        pymsgbox.alert("The save file does not exist,\nor a unknown error has occurred", "Error") # Show the error message
+    
+    except Exception as e: # In case it can't
+        pymsgbox.alert(f"The save file does not exist, or a unknown error has occurred!\nTrace: \n{e}", "Error! Please contact riccar10210 on discord!") # Show the error message
 
     return saveFile
 

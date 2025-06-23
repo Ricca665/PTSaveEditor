@@ -145,11 +145,11 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     #with dpg.tooltip(parent=lhpp):
      #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
     with dpg.tooltip(parent=snotty):
-        dpg.add_text("Changes the snotty flag to revive")
+        dpg.add_text("Changes the snotty flag to revive him")
     with dpg.tooltip(parent=p_rank):
-        dpg.add_text("Sets the appropiate flags for each level")
+        dpg.add_text("Sets the appropiate ranks (and other) for each level")
     with dpg.tooltip(parent=cleanshit):
-        dpg.add_text("Removes garbage data that is not important\nBut that cause this tool to shit itself\nMods automatically regenerates this data")
+        dpg.add_text("Removes garbage data that is not important\nBut that cause this tool to not work.\nMods automatically regenerates this data")
 
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())
@@ -173,7 +173,6 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-
 
 with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
