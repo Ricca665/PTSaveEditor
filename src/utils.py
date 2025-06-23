@@ -124,7 +124,8 @@ def SetRanks(level, rank, gerome, secrets, score):
     else:
         config["Secret"][str(level)] = f'"{str(0)}"'
 
-    config["Highscore"][str(level)] = f'"{str(score)}"'
+    if score > 0:
+        config["Highscore"][str(level)] = f'"{str(score)}"'
 
     with open(saveFile, "w") as configfile: # Opens the file
         config.write(configfile) # Writes it back
@@ -135,7 +136,75 @@ def lhppSetRanks(level, rank, lunatic, lapping):
     config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
 
     #config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
+
+def SetLapMinusRanks(level, rank, islapminus, lap):
     
+    CleanSaveFileGarbage()
+
+    config.read(saveFile) # Reads the file
+
+    if "LapMinusNegative" not in config:
+        config["LapMinusNegative"] = {}
+
+    
+    if "LapMinusPositive" not in config:
+        config["LapMinusPositive"] = {}
+
+    # Behold, THE... uhh... lap checker shit
+    # HELL YEAH!!!!
+    # TODO (hopefully) fix this mess (maybe make a number and subtract it?)
+    print(lap)
+    print(rank)
+    if islapminus:
+        if lap == "lap 5":
+            if rank == "p":
+                config["LapMinusNegative"][str(level)] = f'"{str(7)}"'
+            else:
+                config["LapMinusNegative"][str(level)] = f'"{str(6)}"'
+        elif lap == "lap 4":
+            if rank == "p":
+                config["LapMinusNegative"][str(level)] = f'"{str(5)}"'
+            else:
+                config["LapMinusNegative"][str(level)] = f'"{str(4)}"'
+        elif lap == "lap 3":
+            if rank == "p":
+                config["LapMinusNegative"][str(level)] = f'"{str(3)}"'
+            elif rank == "s":
+                config["LapMinusNegative"][str(level)] = f'"{str(2)}"'
+    else:
+        if lap == "lap 5":
+            if rank == "p":
+                config["LapMinusPositive"][str(level)] = f'"{str(6)}"'
+            else:
+                config["LapMinusPositive"][str(level)] = f'"{str(5)}"'
+        elif lap == "lap 4":
+            if rank == "p":
+                config["LapMinusPositive"][str(level)] = f'"{str(4)}"'
+            else:
+                config["LapMinusPositive"][str(level)] = f'"{str(3)}"'
+        elif lap == "lap 3":
+            if rank == "p":
+                config["LapMinusPositive"][str(level)] = f'"{str(2)}"'
+            else:
+                config["LapMinusPositive"][str(level)] = f'"{str(1)}"'
+        
+    with open(saveFile, "w") as configfile: # Opens the file
+        config.write(configfile) # Writes it back
+
+def SetCTOPLappingMinusLap():
+    CleanSaveFileGarbage()
+
+    config.read(saveFile)
+
+    if "Unlocks" not in config:
+        config["Unlocks"] = {}
+    
+    config["Unlocks"]["minus_tctop"] = f'"1"'
+
+    with open(saveFile, "w") as configfile: # Opens the file
+        config.write(configfile) # Writes it back
+
+
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
 def showRankScreen():
@@ -174,6 +243,11 @@ def showLHPPEditor():
 def showL3DXEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("l3dxSaveEditor")
+
+def showMinusEditor():
+    dpg.hide_item("editSaveWindow")
+    dpg.hide_item("l3dxSaveEditor")
+    dpg.show_item("minusSaveWindow")
 
 if __name__ == "__main__":
     print("You are NOT supposed to run this directly!")

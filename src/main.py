@@ -18,6 +18,8 @@ rank = "p"
 lap = "lap3"
 score = 0
 keys = False
+lapminus = False
+laps = "lap 3"
 
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
@@ -51,6 +53,7 @@ def _get_gerome(sender, app_data):
 def _get_rank(sender, app_data):
     global rank
     rank = app_data
+    print(app_data)
     return rank
 
 def _get_lunatic(sender, app_data):
@@ -72,6 +75,17 @@ def _get_keys(sender, app_data):
     global keys
     keys = app_data
     return keys
+
+def _get_lapminus(sender, app_data):
+    global lapminus
+    lapminus = app_data
+    print(app_data)
+    return app_data
+
+def _get_laps(sender, app_data):
+    global laps
+    laps = app_data
+    return app_data
 
 def fullscreen_window(sender, app_data, user_data):
     width, height = dpg.get_viewport_client_width(), dpg.get_viewport_client_height()
@@ -125,7 +139,8 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     cleanshit = dpg.add_button(label="Clean save file garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
     #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
-    l3dx = dpg.add_button(label="Edit l3dx save file", callback=lambda: showL3DXEditor())
+    l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
+    lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
     # Hover tooltips
     #with dpg.tooltip(parent=lhpp):
      #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
@@ -168,7 +183,7 @@ with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=Tru
                   "kidsparty", "freezer", "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"], callback=_get_level)
     
-    dpg.add_combo(label="Rank to set to", items=["p", "s"], callback=lambda:_get_rank)
+    dpg.add_combo(label="Rank to set to", items=["p", "s"], callback=_get_rank)
 
     dpg.add_combo(label="Lapping", items=["lap5", "lap4", "lap3"], callback=lambda:_get_lapping)
     dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunatic)
@@ -190,6 +205,23 @@ with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=Tru
     dpg.add_checkbox(label="Add key?", callback=_get_keys)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:l3dxSetRanks(level, rank, keys))
+    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
+    with dpg.tooltip(parent=friendly_names):
+        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
+
+with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
+    dpg.add_button(label="Return to main screen", callback=hideRankScreen)
+    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
+                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
+                  "b_fakepep", "trickytreat", "entrway", "exit", "chateau",
+                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
+                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps)
+    dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank)
+    dpg.add_checkbox(label="Lap minus?", callback=_get_lapminus)
+    dpg.add_spacer(height=50)
+    dpg.add_button(label="Set ranks", callback=lambda:SetLapMinusRanks(level, rank, lapminus, laps))
+    dpg.add_button(label="Unlock CTOP Lapping", callback=lambda:SetCTOPLappingMinusLap())
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
@@ -229,12 +261,14 @@ dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveW
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "rankSetter"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "l3dxSaveEditor"))
+dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "minusSaveWindow"))
 
 #Once at startup
 fullscreen_window(None, None, "editSaveWindow")
 fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")
 fullscreen_window(None, None, "l3dxSaveEditor")
+fullscreen_window(None, None, "minusSaveWindow")
 dpg.start_dearpygui()
 
 #Destroying when closing
