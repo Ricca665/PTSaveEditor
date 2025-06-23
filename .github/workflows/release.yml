@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Needed for commit messages & git tagging
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,7 +23,7 @@ jobs:
       - name: Install depedencies and build EXE
         run: python builder.py
 
-      - name: Check
+      - name: Check commit message
         id: check
         run: |
           $msg = git log -1 --pretty=%B
@@ -34,7 +34,7 @@ jobs:
             echo "should_release=true" >> $env:GITHUB_OUTPUT
           }
 
-      - name: Tag em
+      - name: Tag the release
         if: steps.check.outputs.should_release == 'true'
         run: |
           $tag = "pre-v$(Get-Date -Format 'yyyy.MM.dd-HHmm')"
@@ -49,8 +49,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.tag }}
-          name: ${{ env.tag }}
+          name: "Prerelease version"
           prerelease: true
-          files: dist/PTSaveFileEditor.exe
+          files: output/PTSaveFileEditor.zip 
+          body: |
+            This is the pre release version of the tool, meaning that is heavily untested
+            Use at your own risk!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
