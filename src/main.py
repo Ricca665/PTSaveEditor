@@ -254,7 +254,7 @@ dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveE
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "l3dxSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "minusSaveWindow"))
 
-#Once at startup
+#This runs once at startup
 fullscreen_window(None, None, "editSaveWindow")
 fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")
