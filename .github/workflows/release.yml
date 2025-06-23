@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_release:
+  buildthelittleshit:
     runs-on: windows-latest
 
     steps:
