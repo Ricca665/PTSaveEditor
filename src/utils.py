@@ -37,6 +37,10 @@ def ReviveSnotty():
     CleanSaveFileGarbage() # Cleans the garbage data at the end
     
     config.read(saveFile) # Reads the file
+
+    if "Game" not in config:
+        config["Game"] = {}
+
     config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
 
     with open(saveFile, "w") as configfile: # Opens the file
