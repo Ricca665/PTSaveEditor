@@ -1,4 +1,4 @@
-name: Build and Upload Conditional Pre-release
+name: Build Pre-release
 
 on:
   push:
@@ -18,15 +18,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt pyinstaller
-
-      - name: Build EXE
+      - name: Install depedencies and build EXE
         run: pyinstaller --onefile --windowed src/main.py --name "PTSaveFileEditor.exe" --clean --noupx --version-file version.txt
 
-      - name: Check commit message
+      - name: Check
         id: check
         run: |
           $msg = git log -1 --pretty=%B
@@ -37,7 +34,7 @@ jobs:
             echo "should_release=true" >> $env:GITHUB_OUTPUT
           }
 
-      - name: Tag and Upload Pre-release
+      - name: Tag em
         if: steps.check.outputs.should_release == 'true'
         run: |
           $tag = "pre-v$(Get-Date -Format 'yyyy.MM.dd-HHmm')"
@@ -47,7 +44,7 @@ jobs:
           git push origin $tag
           echo "tag=$tag" >> $env:GITHUB_ENV
 
-      - name: Upload to GitHub Pre-release
+      - name: Upload
         if: steps.check.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
