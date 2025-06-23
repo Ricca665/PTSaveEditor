@@ -10,7 +10,6 @@ compiler_flags = '--onefile --windowed src/main.py --name="PTSaveFileEditor.exe"
                     '--version-file=version.txt' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now 🌹🌹
 libs = ["dearpygui", compiler, "pymsgbox"] # Required libraries 
 
-version_number = "4" # The version number of the program
 def main():
     os.chdir(os.path.dirname(os.path.realpath(__file__))) # Enters the current directory where the builder is found, this fixes the "Script file 'src/main.py' does not exist." error when compiling
     try:
@@ -30,7 +29,7 @@ def main():
     compile(compiler, compiler_flags)
 
     print("Step 3/3: Zipping program")
-    zipfilepath = f"../output/PTSaveFileEditorV{version_number}.zip"
+    zipfilepath = f"../output/PTSaveFileEditor.zip"
     packageExec(zipfilepath)
 
     print("Done! Check for any errors")

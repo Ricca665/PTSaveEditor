@@ -10,8 +10,9 @@ def install_libs(libs):
         subprocess.run([sys.executable, "-m", "pip", "install", lib]) # Installs the library
     
 def compile(compiler, flags):
-    flags_splitted = shlex.split(flags) # Splits each of the flags
-    subprocess.run([compiler, flags_splitted]) # Compiles the executable
+    flags_splitted = shlex.split(flags)
+    subprocess.run([compiler, *flags_splitted])
+
 
 def packageExec(zipfilepath):
     try:
