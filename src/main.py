@@ -218,12 +218,14 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
 <<<<<<< HEAD
+<<<<<<< HEAD
 #test4
 =======
 #test6
 >>>>>>> 13ead2b (test6)
+=======
+>>>>>>> d4f45aa (test (release check))
 
-#asd
 with dpg.window(tag="friendly_names", show=False):
     dpg.add_text("entrance = John Gutter")
     dpg.add_text("medieval = Pizzascape")
