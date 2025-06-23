@@ -32,8 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact
-        id: download
-        run: git clone --recurse-submodules https://github.com/Ricca665/PTSaveEditor
+        uses: actions/download-artifact@v4
+        with:
+          fetch-depth: 0
 
       - name: Get commit message
         id: commit
