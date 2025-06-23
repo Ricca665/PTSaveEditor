@@ -90,8 +90,17 @@ def CleanSaveFileGarbage():
 
 def l3dxSetRanks(level, rank, keys):
     CleanSaveFileGarbage()
-
     config.read(saveFile)
+
+    if "Lapped3" not in config:
+        config["Lapped3"] = {}
+    
+    if "3Rank" not in config:
+        config["3Rank"] = {}
+    
+    if "LapKey" not in config:
+        config["LapKey"] = {}
+
     level = str(level)+"6" # L3DX saves the data for each level as level+6 and then the value
                            # By doing this we are doing it just once
                            # SO if the level was "entrance" it would be entrance6
