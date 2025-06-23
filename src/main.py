@@ -217,14 +217,6 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-<<<<<<< HEAD
-<<<<<<< HEAD
-#test4
-=======
-#test6
->>>>>>> 13ead2b (test6)
-=======
->>>>>>> d4f45aa (test (release check))
 
 with dpg.window(tag="friendly_names", show=False):
     dpg.add_text("entrance = John Gutter")
@@ -262,7 +254,7 @@ dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveE
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "l3dxSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "minusSaveWindow"))
 
-#This runs once at startup
+#Once at startup
 fullscreen_window(None, None, "editSaveWindow")
 fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")

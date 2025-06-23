@@ -1,4 +1,4 @@
-name: Build commit
+name: Build Pre-release
 
 on:
   push:
@@ -6,63 +6,23 @@ on:
       - main
 
 jobs:
-<<<<<<< HEAD
-  build:
-=======
   buildthelittleshit:
->>>>>>> d4f45aa (test (release check))
     runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-<<<<<<< HEAD
-=======
         with:
           fetch-depth: 0
->>>>>>> 4433b63 (last little shits)
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install depedencies and build executable
+      - name: Install depedencies and build EXE
         run: python builder.py
 
-<<<<<<< HEAD
-      - name: Upload executable as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: PTSaveFileEditor
-          path: output/PTSaveFileEditor.zip
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get commit message
-        id: commit
-        run: echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-
-      - name: Set release info
-        id: release_info
-        run: |
-          if [[ "${{ steps.commit.outputs.msg }}" == *release* ]]; then
-            echo "prerelease=false" >> $GITHUB_OUTPUT
-            echo "tag=v$(date +%Y.%m.%d-%H%M)" >> $GITHUB_OUTPUT
-          else
-            echo "prerelease=true" >> $GITHUB_OUTPUT
-            echo "tag=pre-v$(date +%Y.%m.%d-%H%M)" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create Git tag
-=======
       - name: Check commit message
         id: check
         run: |
@@ -73,25 +33,19 @@ jobs:
           } else {
             echo "should_release=true" >> $env:GITHUB_OUTPUT
           }
-
       - name: Tag the release
         if: steps.check.outputs.should_release == 'true'
->>>>>>> 4433b63 (last little shits)
         run: |
+          $tag = "pre-v$(Get-Date -Format 'yyyy.MM.dd-HHmm')"
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git tag ${{ steps.release_info.outputs.tag }}
-          git push origin ${{ steps.release_info.outputs.tag }}
-
-      - name: Create GitHub Release
+          git tag $tag
+          git push origin $tag
+          echo "tag=$tag" >> $env:GITHUB_ENV
+      - name: Upload
+        if: steps.check.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
-<<<<<<< HEAD
-          tag_name: ${{ steps.release_info.outputs.tag }}
-          name: ${{ steps.release_info.outputs.tag }}
-          prerelease: ${{ steps.release_info.outputs.prerelease }}
-          files: PTSaveFileEditor.exe
-=======
           tag_name: ${{ env.tag }}
           name: "Prerelease version"
           prerelease: true
@@ -99,6 +53,5 @@ jobs:
           body: |
             This is the pre release version of the tool, meaning that is heavily untested
             Use at your own risk!
->>>>>>> 4433b63 (last little shits)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
