@@ -1,0 +1,69 @@
+name: Build commit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install depedencies and build executable
+        run: python builder.py
+
+      - name: Upload executable as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PTSaveFileEditor
+          path: output/PTSaveFileEditor.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: PTSaveFileEditor
+
+      - name: Get commit message
+        id: commit
+        run: echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      - name: Set release info
+        id: release_info
+        run: |
+          if [[ "${{ steps.commit.outputs.msg }}" == *release* ]]; then
+            echo "prerelease=false" >> $GITHUB_OUTPUT
+            echo "tag=v$(date +%Y.%m.%d-%H%M)" >> $GITHUB_OUTPUT
+          else
+            echo "prerelease=true" >> $GITHUB_OUTPUT
+            echo "tag=pre-v$(date +%Y.%m.%d-%H%M)" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Git tag
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git tag ${{ steps.release_info.outputs.tag }}
+          git push origin ${{ steps.release_info.outputs.tag }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release_info.outputs.tag }}
+          name: ${{ steps.release_info.outputs.tag }}
+          prerelease: ${{ steps.release_info.outputs.prerelease }}
+          files: PTSaveFileEditor.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
