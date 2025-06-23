@@ -217,7 +217,7 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-#test6
+#test5
 
 #asd
 with dpg.window(tag="friendly_names", show=False):
