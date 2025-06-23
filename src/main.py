@@ -20,6 +20,13 @@ score = 0
 keys = False
 lapminus = False
 laps = "lap 3"
+levels = ["entrance", "medieval", "ruin", "dungeon", 
+                  "badland", "graveyard", "farm", "saloon",
+                   "trickytreat", "entrway", "exit", "chateau",
+                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
+                  "forest", "minigolf", "sewer", "war"]
+
+bosses = ["b_pepperman", "b_vigilante", "b_noise","b_fakepep"]
 
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
@@ -38,6 +45,7 @@ def _get_savefile_number(sender, app_data, user_data):
 def _get_level(sender, app_data, user_data):
     global level
     level = app_data
+    print(app_data)
     return level
 
 def _get_secrets(sender, app_data):
@@ -159,11 +167,7 @@ with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no
 
 with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
-                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
-                  "b_fakepep", "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Level selector", items=levels+bosses, callback=_get_level)
     dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
     dpg.add_input_float(label="Score", callback=_get_score)
     dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3, callback=_get_secrets)
@@ -177,11 +181,7 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
 
 with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon",
-                  "badland", "graveyard", "farm", "saloon", "b_vigilante",
-                  "pizzarush", "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
     
     dpg.add_combo(label="Rank to set to", items=["p", "s"], callback=_get_rank)
 
@@ -195,11 +195,7 @@ with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=Tru
 
 with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon",
-                  "badland", "graveyard", "farm", "saloon",
-                  "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
     
     dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b"], callback=_get_rank)
     dpg.add_checkbox(label="Add key?", callback=_get_keys)
@@ -211,11 +207,7 @@ with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=Tru
 
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=["entrance", "medieval", "ruin", "dungeon", "b_pepperman",
-                  "badland", "graveyard", "farm", "saloon", "b_noise", "b_vigilante",
-                  "b_fakepep", "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"], callback=_get_level)
+    dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
     dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps)
     dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank)
     dpg.add_checkbox(label="Lap minus?", callback=_get_lapminus)
