@@ -55,8 +55,7 @@ def CleanSaveFileGarbage():
 
     with open(saveFile, "r") as f:
         saveFileData = f.read()
-        
-    
+       
     saveFileCleanData = saveFileData
     # Some noise shit
     saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="0.000000"', "")
@@ -95,6 +94,7 @@ def l3dxSetRanks(level, rank, keys):
     config.read(saveFile)
     level = str(level)+"6" # L3DX saves the data for each level as level+6 and then the value
                            # By doing this we are doing it just once
+                           # SO if the level was "entrance" it would be entrance6
 
     config["Lapped3"][level] = f'"2.000000"'
     config["3Rank"][level] = f'"{rank}"' # Rank
@@ -162,11 +162,30 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
     if "LapMinusPositive" not in config:
         config["LapMinusPositive"] = {}
 
+    # This is the lapping table for the Lap minus mod:
+    # For the lap minus (so lap -3, -4 and -5):
+    # NUMBER | LAP NUMBER | MEANING
+    # 7            5        Lap 5 P Rank
+    # 6            5        Lap 5 S Rank
+    # 5            4        Lap 4 P Rank
+    # 4            4        Lap 4 S Rank 
+    # 3            3        Lap 3 P Rank
+    # 2            3        Lap 3 S Rank 
+    #    Maybe something for Lap 2?
+    # For the normal lapping (so lap 3, 4 and 5):
+    # NUMBER | LAP NUMBER | MEANING
+    # 6            5        Lap 5 P Rank
+    # 5            5        Lap 5 S Rank
+    # 4            4        Lap 4 P Rank
+    # 3            4        Lap 4 S Rank 
+    # 2            3        Lap 3 P Rank
+    # 1            3        Lap 3 S Rank 
+
     # Behold, THE... uhh... lap checker shit
     # HELL YEAH!!!!
     # TODO (hopefully) fix this mess (maybe make a number and subtract it?)
-    print(lap)
-    print(rank)
+
+
     if islapminus:
         if lap == "lap 5":
             if rank == "p":
