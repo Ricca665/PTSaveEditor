@@ -5,7 +5,7 @@ import pymsgbox
 import sys
 
 config = configparser.ConfigParser()
-def OpenRealFileName(saveFileNumber, player, savedatadir):
+def OpenRealFileName(saveFileNumber, noise, savedatadir):
     global saveFile
     TempsaveFile = ""
 
@@ -17,8 +17,8 @@ def OpenRealFileName(saveFileNumber, player, savedatadir):
     if saveFileNumber == "Save file 3":
         TempsaveFile = "saveData3.ini"
 
-    #True at the end means that the noise checkbox is checked
-    if player:
+    #True means that the noise checkbox is checked
+    if noise:
         TempsaveFile = TempsaveFile.replace(".ini", "")
         TempsaveFile = TempsaveFile + "N.ini"
     saveFile = savedatadir+"/"+TempsaveFile

@@ -98,6 +98,7 @@ try:
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
     currentdir = os.getcwd().replace("\\", "/")
     backupdir = currentdir+"/backup"
+
     try:
         os.makedirs(backupdir)
         os.chdir(savedatadir)
@@ -110,10 +111,9 @@ try:
 
 except Exception as e:
     # The following line basically tells it to create a error popup window
-    pymsgbox.alert("""The saves folder does not exist or an unknown error has occured.\n
+    pymsgbox.alert(f"""The saves folder does not exist or an unknown error has occured.\n
                    Please generate it by opening pizza tower, entering a save\nand
-                   completing the tutorial""", "An error has occured!")
-    print(e) # Print error
+                   completing the tutorial\nTrace:\n{e}""", "An error has occured!")
     sys.exit(1) # Exit
 
 #We initialize the buttons and other stuff
@@ -141,6 +141,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
+
     # Hover tooltips
     #with dpg.tooltip(parent=lhpp):
      #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
