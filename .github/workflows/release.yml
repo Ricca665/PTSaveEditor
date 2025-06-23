@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install depedencies and build EXE
-        run: pyinstaller --onefile --windowed src/main.py --name "PTSaveFileEditor.exe" --clean --noupx --version-file version.txt
+        run: python builder.py
 
       - name: Check
         id: check
