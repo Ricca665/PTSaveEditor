@@ -35,17 +35,14 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
     return saveFile
 
 def ReviveSnotty():
-    CleanSaveFileGarbage() # Cleans the garbage data at the end
-    
-    config.read(saveFile) # Reads the file
+    INISetup()
 
     if "Game" not in config:
         config["Game"] = {}
 
     config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
 
-    with open(saveFile, "w") as configfile: # Opens the file
-        config.write(configfile) # Writes it back
+    INICloseAndNWrite()
 
 def CleanSaveFileGarbage():
     with open(saveFile, "rb") as f: # opens the file in byte mode
@@ -93,10 +90,20 @@ def CleanSaveFileGarbage():
     with open(saveFile, "w") as f:
         f.write(saveFileCleanData)
 
-def l3dxSetRanks(level, rank, keys):
+def INISetup():
     CleanSaveFileGarbage()
     config.read(saveFile)
+    return
 
+def INICloseAndNWrite():
+    with open(saveFile, "w") as newSaveFile: # Opens the file
+        config.write(newSaveFile) # Writes it back
+    return
+
+# Set ranks logic
+def l3dxSetRanks(level, rank, keys):
+    INISetup()
+    
     if "Lapped3" not in config:
         config["Lapped3"] = {}
     
@@ -118,14 +125,11 @@ def l3dxSetRanks(level, rank, keys):
     else:
         config["LapKey"][level] = f'"0.000000"'
 
-    with open(saveFile, "w") as configfile: # Opens the file
-        config.write(configfile) # Writes it back
+    INICloseAndNWrite()
 
 def SetRanks(level, rank, gerome, secrets, score):
-    CleanSaveFileGarbage()
+    INISetup()
 
-    config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
-    
     if "Ranks" not in config:
         config["Ranks"] = {}
         
@@ -153,21 +157,10 @@ def SetRanks(level, rank, gerome, secrets, score):
     if score > 0:
         config["Highscore"][str(level)] = f'"{str(score)}"'
 
-    with open(saveFile, "w") as configfile: # Opens the file
-        config.write(configfile) # Writes it back
-
-def lhppSetRanks(level, rank, lunatic, lapping):
-    CleanSaveFileGarbage()
-
-    config.read(saveFile) # Rereads the save file with configparser, this let's us modify specific sections OF the file
-
-    #config["Ranks"][str(level)] = f'"{str(rank)}"'  # Compares each file in the Ranks section of the file and changes it to be a p rank
+    INICloseAndNWrite()
 
 def SetLapMinusRanks(level, rank, islapminus, lap):
-    
-    CleanSaveFileGarbage()
-
-    config.read(saveFile) # Reads the file
+    INISetup()
 
     if "LapMinusNegative" not in config:
         config["LapMinusNegative"] = {}
@@ -233,22 +226,17 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
             else:
                 config["LapMinusPositive"][str(level)] = f'"{str(1)}"'
         
-    with open(saveFile, "w") as configfile: # Opens the file
-        config.write(configfile) # Writes it back
+    INICloseAndNWrite()
 
 def SetCTOPLappingMinusLap():
-    CleanSaveFileGarbage()
-
-    config.read(saveFile)
+    INISetup()
 
     if "Unlocks" not in config:
         config["Unlocks"] = {}
     
     config["Unlocks"]["minus_tctop"] = f'"1"'
 
-    with open(saveFile, "w") as configfile: # Opens the file
-        config.write(configfile) # Writes it back
-
+    INICloseAndNWrite()
 
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
