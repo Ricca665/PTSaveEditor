@@ -163,7 +163,8 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())
     dpg.add_input_text(tag="file_contents", multiline=True, width=700, height=600)
-    dpg.set_value("file_contents", saveFile)
+    saveFileContents = config.read(saveFile)
+    dpg.set_value("file_contents", saveFileContents)
 
 with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)

@@ -92,7 +92,7 @@ def CleanSaveFileGarbage():
 
 def INISetup():
     CleanSaveFileGarbage()
-    config.read(saveFile)
+    config.read(saveFile) # Reads the save file
     return
 
 def INICloseAndNWrite():
