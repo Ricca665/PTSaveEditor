@@ -33,6 +33,7 @@ jobs:
           } else {
             echo "should_release=true" >> $env:GITHUB_OUTPUT
           }
+
       - name: Tag the release
         if: steps.check.outputs.should_release == 'true'
         run: |
@@ -42,6 +43,7 @@ jobs:
           git tag $tag
           git push origin $tag
           echo "tag=$tag" >> $env:GITHUB_ENV
+
       - name: Upload
         if: steps.check.outputs.should_release == 'true'
         uses: softprops/action-gh-release@v2
