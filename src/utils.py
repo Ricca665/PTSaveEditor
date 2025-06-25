@@ -42,7 +42,7 @@ def ReviveSnotty():
 
     config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
 
-    INICloseAndNWrite()
+    INICloseAndWrite()
 
 def CleanSaveFileGarbage():
     with open(saveFile, "rb") as f: # opens the file in byte mode
@@ -95,7 +95,7 @@ def INISetup():
     config.read(saveFile) # Reads the save file
     return
 
-def INICloseAndNWrite():
+def INICloseAndWrite():
     with open(saveFile, "w") as newSaveFile: # Opens the file
         config.write(newSaveFile) # Writes it back
     showDoneWindow()
@@ -126,7 +126,7 @@ def l3dxSetRanks(level, rank, keys):
     else:
         config["LapKey"][level] = f'"0.000000"'
 
-    INICloseAndNWrite()
+    INICloseAndWrite()
     
 
 def SetRanks(level, rank, gerome, secrets, score):
@@ -159,7 +159,7 @@ def SetRanks(level, rank, gerome, secrets, score):
     if score > 0:
         config["Highscore"][str(level)] = f'"{str(score)}"'
 
-    INICloseAndNWrite()
+    INICloseAndWrite()
 
 def SetLapMinusRanks(level, rank, islapminus, lap):
     INISetup()
@@ -192,43 +192,50 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
 
     # Behold, THE... uhh... lap checker shit
     # HELL YEAH!!!!
-    # TODO (hopefully) fix this mess (maybe make a number and subtract it?)
 
+    rank = 0 # When rank is 0 it means that no rank is set
 
+    # For this follow the table above
     if islapminus:
         if lap == "lap 5":
             if rank == "p":
-                config["LapMinusNegative"][str(level)] = f'"{str(7)}"'
+                rank = 7
             else:
-                config["LapMinusNegative"][str(level)] = f'"{str(6)}"'
+                rank = 6
         elif lap == "lap 4":
             if rank == "p":
-                config["LapMinusNegative"][str(level)] = f'"{str(5)}"'
+                rank = 5
             else:
-                config["LapMinusNegative"][str(level)] = f'"{str(4)}"'
+                rank = 4
         elif lap == "lap 3":
             if rank == "p":
-                config["LapMinusNegative"][str(level)] = f'"{str(3)}"'
-            elif rank == "s":
-                config["LapMinusNegative"][str(level)] = f'"{str(2)}"'
+                rank = 3
+            else:
+                rank = 2
+        else:
+            rank = 0
+        config["LapMinusNegative"][str(level)] = f'"{rank}"' # Modify the rank
     else:
         if lap == "lap 5":
             if rank == "p":
-                config["LapMinusPositive"][str(level)] = f'"{str(6)}"'
+                rank = 6
             else:
-                config["LapMinusPositive"][str(level)] = f'"{str(5)}"'
+                rank = 5
         elif lap == "lap 4":
             if rank == "p":
-                config["LapMinusPositive"][str(level)] = f'"{str(4)}"'
+                rank = 4
             else:
-                config["LapMinusPositive"][str(level)] = f'"{str(3)}"'
+                rank = 3
         elif lap == "lap 3":
             if rank == "p":
-                config["LapMinusPositive"][str(level)] = f'"{str(2)}"'
+                rank = 2
             else:
-                config["LapMinusPositive"][str(level)] = f'"{str(1)}"'
+                rank = 1
+        else:
+            rank = 0
+        config["LapMinusPositive"][str(level)] = f'"{rank}"' # Modify the rank
         
-    INICloseAndNWrite()
+    INICloseAndWrite() # Close the INI and save
 
 def SetCTOPLappingMinusLap():
     INISetup()
@@ -238,7 +245,7 @@ def SetCTOPLappingMinusLap():
     
     config["Unlocks"]["minus_tctop"] = f'"1"'
 
-    INICloseAndNWrite()
+    INICloseAndWrite()
 
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
