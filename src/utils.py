@@ -98,6 +98,7 @@ def INISetup():
 def INICloseAndNWrite():
     with open(saveFile, "w") as newSaveFile: # Opens the file
         config.write(newSaveFile) # Writes it back
+    showDoneWindow()
     return
 
 # Set ranks logic
@@ -126,7 +127,7 @@ def l3dxSetRanks(level, rank, keys):
         config["LapKey"][level] = f'"0.000000"'
 
     INICloseAndNWrite()
-    showDoneWindow()
+    
 
 def SetRanks(level, rank, gerome, secrets, score):
     INISetup()

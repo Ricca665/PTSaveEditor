@@ -35,7 +35,7 @@ dpg.setup_dearpygui()
 def _get_player(sender, app_data, user_data):
     global player
     player = app_data
-    return player
+    return app_data
 
 def _get_savefile_number(sender, app_data, user_data):
     global saveFile
@@ -45,24 +45,22 @@ def _get_savefile_number(sender, app_data, user_data):
 def _get_level(sender, app_data, user_data):
     global level
     level = app_data
-    print(app_data)
-    return level
+    return app_data
 
 def _get_secrets(sender, app_data):
     global secrets
     secrets = app_data
-    return level
+    return app_data
 
 def _get_gerome(sender, app_data):
     global doGerome
     doGerome = app_data
-    return doGerome
+    return app_data
 
 def _get_rank(sender, app_data):
     global rank
     rank = app_data
-    print(app_data)
-    return rank
+    return app_data
 
 def _get_lunatic(sender, app_data):
     global lunatic
@@ -82,12 +80,11 @@ def _get_score(sender, app_data):
 def _get_keys(sender, app_data):
     global keys
     keys = app_data
-    return keys
+    return app_data
 
 def _get_lapminus(sender, app_data):
     global lapminus
     lapminus = app_data
-    print(app_data)
     return app_data
 
 def _get_laps(sender, app_data):
@@ -149,7 +146,6 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
-    dpg.add_button(label="TEST", callback=lambda: showDoneWindow())
     # Hover tooltips
     #with dpg.tooltip(parent=lhpp):
      #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
