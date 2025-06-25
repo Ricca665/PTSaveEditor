@@ -149,7 +149,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
-
+    dpg.add_button(label="TEST", callback=lambda: showDoneWindow())
     # Hover tooltips
     #with dpg.tooltip(parent=lhpp):
      #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
@@ -261,6 +261,7 @@ fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")
 fullscreen_window(None, None, "l3dxSaveEditor")
 fullscreen_window(None, None, "minusSaveWindow")
+
 dpg.start_dearpygui()
 
 #Destroying when closing
