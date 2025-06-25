@@ -278,10 +278,8 @@ def OpenMainScreen():
     dpg.hide_item("rawEditor") # Hides the editor
     dpg.show_item("editSaveWindow") # Shows the main menu
 
-def showLHPPEditor():
-    dpg.hide_item("editSaveWindow")
-    dpg.show_item("lhppSaveEditor")
-
+#TODO Maybe rewrite this logic?
+# I noticed that we should only need a show_item
 def showL3DXEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("l3dxSaveEditor")

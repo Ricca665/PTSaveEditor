@@ -13,7 +13,6 @@ saveFile = ""
 level = "entrance"
 secrets = 0
 doGerome = False
-lunatic = False
 rank = "p"
 lap = "lap3"
 score = 0
@@ -60,11 +59,6 @@ def _get_gerome(sender, app_data):
 def _get_rank(sender, app_data):
     global rank
     rank = app_data
-    return app_data
-
-def _get_lunatic(sender, app_data):
-    global lunatic
-    lunatic = app_data
     return app_data
 
 def _get_lapping(sender, app_data):
@@ -143,12 +137,9 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     p_rank = dpg.add_button(label="Set rank for level(s)", callback=lambda: showRankScreen())
     cleanshit = dpg.add_button(label="Clean save file garbage", callback=lambda: CleanSaveFileGarbage())
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
-    #lhpp = dpg.add_button(label="Edit LHPP save file", callback=lambda: showLHPPEditor())
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
     # Hover tooltips
-    #with dpg.tooltip(parent=lhpp):
-     #   dpg.add_text("Modify the save files for\nthe Lap Hell: Pizza Pursuit mod")
     with dpg.tooltip(parent=snotty):
         dpg.add_text("Changes the snotty flag to revive him")
     with dpg.tooltip(parent=p_rank):
@@ -172,20 +163,6 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets, score))
 
-    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
-    with dpg.tooltip(parent=friendly_names):
-        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-
-with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
-    dpg.add_button(label="Return to main screen", callback=hideRankScreen)
-    dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
-    
-    dpg.add_combo(label="Rank to set to", items=["p", "s"], callback=_get_rank)
-
-    dpg.add_combo(label="Lapping", items=["lap5", "lap4", "lap3"], callback=lambda:_get_lapping)
-    dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunatic)
-    dpg.add_spacer(height=50)
-    #dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, lunatic, lap))
     friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
     with dpg.tooltip(parent=friendly_names):
         dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
@@ -247,7 +224,6 @@ dpg.set_primary_window("opensaveFile", True) #Setting it to primary
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveWindow"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "rankSetter"))
-dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "l3dxSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "minusSaveWindow"))
 
