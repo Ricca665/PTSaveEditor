@@ -79,6 +79,10 @@ def _get_keys(sender, app_data):
 def _get_lapminus(sender, app_data):
     global lapminus
     lapminus = app_data
+    if lapminus: # if lap minus is toggled
+        dpg.configure_item("lapselector4lapminus", items=["lap 2", "lap 3", "lap 4", "lap 5"]) # dynamically change the lap selector
+    else:
+        dpg.configure_item("lapselector4lapminus", items=["lap 3", "lap 4", "lap 5"]) # dynamically change the lap selector
     return app_data
 
 def _get_laps(sender, app_data):
@@ -182,8 +186,9 @@ with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=Tru
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
-    dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps)
-    dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank)
+    dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps, tag="lapselector4lapminus")
+    dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank, tag="rankselector4lapminus")
+    #Dear py gui my beloved
     dpg.add_checkbox(label="Lap minus?", callback=_get_lapminus)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetLapMinusRanks(level, rank, lapminus, laps))

@@ -212,6 +212,11 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
                 decidedrank = 3
             else:
                 decidedrank = 2
+        elif lap == "lap 2":
+            if rank == "p":
+                decidedrank = 1
+            else:
+                deciderank = 0
         else:
             rank = 0
         config["LapMinusNegative"][str(level)] = f'"{decidedrank}"' # Modify the rank
