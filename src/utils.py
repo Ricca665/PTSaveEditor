@@ -180,7 +180,7 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
     # 4            4        Lap 4 S Rank 
     # 3            3        Lap 3 P Rank
     # 2            3        Lap 3 S Rank 
-    #    Maybe something for Lap 2? (there was something for lap 2 god damn it)
+    # 1            2        Lap 2 M Rank (below this is just a normal s rank)
     # For the normal lapping (so lap 3, 4 and 5):
     # NUMBER | LAP NUMBER | MEANING
     # 6            5        Lap 5 P Rank
