@@ -1,4 +1,4 @@
-import dearpygui.dearpygui as dpg
+import dearpygui.dearpygui as dpg #Dear py gui my beloved
 import os
 import shutil
 import sys
@@ -188,7 +188,7 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
     dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps, tag="lapselector4lapminus")
     dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank, tag="rankselector4lapminus")
-    #Dear py gui my beloved
+
     dpg.add_checkbox(label="Lap minus?", callback=_get_lapminus)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetLapMinusRanks(level, rank, lapminus, laps))
