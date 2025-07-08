@@ -193,47 +193,47 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
     # Behold, THE... uhh... lap checker shit
     # HELL YEAH!!!!
 
-    rank = 0 # When rank is 0 it means that no rank is set
+    decidedrank = 0 # When rank is 0 it means that no rank is set
 
     # For this follow the table above
     if islapminus:
         if lap == "lap 5":
             if rank == "p":
-                rank = 7
+                decidedrank = 7
             else:
-                rank = 6
+                decidedrank = 6
         elif lap == "lap 4":
             if rank == "p":
-                rank = 5
+                decidedrank = 5
             else:
-                rank = 4
+                decidedrank = 4
         elif lap == "lap 3":
             if rank == "p":
-                rank = 3
+                decidedrank = 3
             else:
-                rank = 2
+                decidedrank = 2
         else:
             rank = 0
-        config["LapMinusNegative"][str(level)] = f'"{rank}"' # Modify the rank
+        config["LapMinusNegative"][str(level)] = f'"{decidedrank}"' # Modify the rank
     else:
         if lap == "lap 5":
             if rank == "p":
-                rank = 6
+                decidedrank = 6
             else:
-                rank = 5
+                decidedrank = 5
         elif lap == "lap 4":
             if rank == "p":
-                rank = 4
+                decidedrank = 4
             else:
-                rank = 3
+                decidedrank = 3
         elif lap == "lap 3":
             if rank == "p":
-                rank = 2
+                decidedrank = 2
             else:
-                rank = 1
+                decidedrank = 1
         else:
-            rank = 0
-        config["LapMinusPositive"][str(level)] = f'"{rank}"' # Modify the rank
+            decidedrank = 0
+        config["LapMinusPositive"][str(level)] = f'"{decidedrank}"' # Modify the rank
         
     INICloseAndWrite() # Close the INI and save
 
