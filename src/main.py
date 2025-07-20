@@ -26,6 +26,8 @@ levels = ["entrance", "medieval", "ruin", "dungeon",
                   "forest", "minigolf", "sewer", "war"]
 
 bosses = ["b_pepperman", "b_vigilante", "b_noise","b_fakepep"]
+ranks = ["p", "s", "a", "b", "c", "d"]
+normal_lap3ranks = ["p", "s"]
 
 dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
@@ -160,7 +162,7 @@ with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no
 with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels+bosses, callback=_get_level)
-    dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b", "c", "d"], callback=_get_rank)
+    dpg.add_combo(label="Rank to set to", items=ranks, callback=_get_rank)
     dpg.add_input_float(label="Score", callback=_get_score)
     dpg.add_slider_int(label="Discovered secrets", min_value=0, max_value= 3, callback=_get_secrets)
     dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
@@ -187,7 +189,7 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
     dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps, tag="lapselector4lapminus")
-    dpg.add_combo(label="Rank", items=["p", "s"], callback=_get_rank, tag="rankselector4lapminus")
+    dpg.add_combo(label="Rank", items=normal_lap3ranks, callback=_get_rank, tag="rankselector4lapminus")
 
     dpg.add_checkbox(label="Lap minus?", callback=_get_lapminus)
     dpg.add_spacer(height=50)

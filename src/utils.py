@@ -5,6 +5,7 @@ import pymsgbox
 import sys
 
 config = configparser.ConfigParser()
+
 def OpenRealFileName(saveFileNumber, noise, savedatadir):
     global saveFile
     TempsaveFile = ""
