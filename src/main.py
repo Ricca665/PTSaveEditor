@@ -33,9 +33,10 @@ levels = ["John gutter", "Pizzascape", "Ancient Cheese", "Bloodsauce Dungeon",
                    "The Pig City", "Peppibot Factory", "Oh Shit!", "RRF", 
                    "Pizzascare", "DMAS", "WAR", "CTOP"]
 
+bosses = ["Pepperman", "Vigilante", "Noise","Fake peppino"]
+
 internal_bosses = ["b_pepperman", "b_vigilante", "b_noise","b_fakepep"]
 
-bosses = ["Pepperman", "Vigilante", "Noise","Fake peppino"]
 
 ranks = ["p", "s", "a", "b", "c", "d"]
 normal_lap3ranks = ["p", "s"]
@@ -180,23 +181,15 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets, score))
-
-    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
-    with dpg.tooltip(parent=friendly_names):
-        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-
 with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
-    
+
     dpg.add_combo(label="Rank to set to", items=["p", "s", "a", "b"], callback=_get_rank)
     dpg.add_checkbox(label="Add key?", callback=_get_keys)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:l3dxSetRanks(level, rank, keys))
-    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
-    with dpg.tooltip(parent=friendly_names):
-        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-
+    
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
@@ -207,36 +200,6 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetLapMinusRanks(level, rank, lapminus, laps))
     dpg.add_button(label="Unlock CTOP Lapping", callback=lambda:SetCTOPLappingMinusLap())
-    friendly_names = dpg.add_button(label="Show friendly names", callback=showFriendlyNames)
-    with dpg.tooltip(parent=friendly_names):
-        dpg.add_text("Essentially pizza tower references\ninternally the levels as the names in\nthe menu (shown above)\nthis button will show you a list of \nfriendly names in comparison\nto internal pizza tower levels")
-
-with dpg.window(tag="friendly_names", show=False):
-    dpg.add_text("entrance = John Gutter")
-    dpg.add_text("medieval = Pizzascape")
-    dpg.add_text("ruin = Ancient Cheese")
-    dpg.add_text("dungeon = Bloodsauce Dungeon")
-    dpg.add_text("b_pepperman = Pepperman")
-    dpg.add_text("badland = Oregano Desert")
-    dpg.add_text("graveyard = Wasteyard")
-    dpg.add_text("farm = Fun Farm")
-    dpg.add_text("saloon = Fastfood Saloon")
-    dpg.add_text("b_vigilante = Vigilante")
-    dpg.add_text("plage = Crust Cove")
-    dpg.add_text("forest = Gnome Forest")
-    dpg.add_text("space = Deep-Dish 9")
-    dpg.add_text("minigolf = Golf")
-    dpg.add_text("b_noise = Noise")
-    dpg.add_text("street = The Pig City")
-    dpg.add_text("industrial = Peppibot Factory")
-    dpg.add_text("sewer = Oh Shit!")
-    dpg.add_text("freezer = Refrigerator-Refrigerador-Freezerator")
-    dpg.add_text("b_fakepep = Fake peppino")
-    dpg.add_text("chateau = Pizzascare")
-    dpg.add_text("kidsparty = Don't Make a Sound")
-    dpg.add_text("war = WAR")
-    dpg.add_text("exit = The Crumbling Tower of Pizza")
-
 #Finishing initialization
 dpg.show_viewport()
 dpg.set_primary_window("opensaveFile", True) #Setting it to primary

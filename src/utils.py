@@ -345,12 +345,6 @@ def OpenRAWEditor():
     dpg.hide_item("editSaveWindow")
     dpg.show_item("rawEditor")
 
-def showFriendlyNames(sender, app_data):
-    if dpg.is_item_shown("friendly_names"): #In case it's already shown
-        dpg.hide_item("friendly_names") # Hide it
-    else:
-        dpg.show_item("friendly_names") # Show it
-
 def OpenMainScreen():
     save = dpg.get_value("file_contents")
     save = str(save)  # Convert to string
