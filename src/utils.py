@@ -45,7 +45,81 @@ def ReviveSnotty():
 
     INICloseAndWrite()
 
+def getInternalNameFromExternal(extname):
+    """Gets the referenced internal name from friendly ones
+
+    Args:
+        extname (string): The friendly name of the level (e.g. John gutter)
+
+    Returns:
+        string: The referenced internal name (e.g. entrance)
+    """
+    level = extname.lower()
+    # Normal levels
+    # Floor 1
+    if level == "john gutter":
+        return "entrance"
+    elif level == "pizzascape":
+        return "medieval"
+    elif level == "ancient cheese":
+        return "ruin"
+    elif level == "bloodsauce dungeon":
+        return "dungeon"
+    # Floor 2
+    elif level == "oregano desert":
+        return "badland"
+    elif level == "wasteyard":
+        return "graveyard"
+    elif level == "fun farm":
+        return "farm"
+    elif level == "fastfood saloon":
+        return "saloon"
+    # Floor 3
+    elif level == "crust cove":
+        return "plage"
+    elif level == "gnome forest":
+        return "forest"
+    elif level == "deep-dish 9":
+        return "space"
+    elif level == "golf":
+        return "minigolf"
+    # Floor 4
+    elif level == "the pig city":
+        return "street"
+    elif level == "peppibot factory":
+        return "industrial"
+    elif level == "oh shit!":
+        return "sewer"
+    elif level == "rrf" or level == "refrigerator-refrigerador-freezerator": # check for both conditions
+        return "freezer"
+    # Floor 5
+    elif level == "pizzascare":
+        return "chateau"
+    elif level == "dmas":
+        return "kidsparty"
+    elif level == "war":
+        return "war"
+    elif level == "ctop":
+        return "exit"
+    
+    # Bosses
+    elif level == "pepperman":
+        return "b_pepperman"
+    elif level == "vigilante":
+        return "b_vigilante"
+    elif level == "noise":
+        return "b_noise"
+    elif level == "fake peppino":
+        return "b_fakepep"
+    
+    # Default return value
+    return "invalid"
+
+
 def CleanSaveFileGarbage():
+    """Cleans the save file garbage
+    """
+
     with open(saveFile, "rb") as f: # opens the file in byte mode
         saveFileData = f.read() # Read the file
 
@@ -60,6 +134,7 @@ def CleanSaveFileGarbage():
         saveFileData = f.read()
        
     saveFileCleanData = saveFileData
+
     # Some noise shit
     saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_forest1N="0.000000"', "")
@@ -105,7 +180,8 @@ def INICloseAndWrite():
 # Set ranks logic
 def l3dxSetRanks(level, rank, keys):
     INISetup()
-    
+    level = getInternalNameFromExternal(level)
+
     if "Lapped3" not in config:
         config["Lapped3"] = {}
     
@@ -132,6 +208,7 @@ def l3dxSetRanks(level, rank, keys):
 
 def SetRanks(level, rank, gerome, secrets, score):
     INISetup()
+    level = getInternalNameFromExternal(level)
 
     if "Ranks" not in config:
         config["Ranks"] = {}
@@ -164,6 +241,7 @@ def SetRanks(level, rank, gerome, secrets, score):
 
 def SetLapMinusRanks(level, rank, islapminus, lap):
     INISetup()
+    level = getInternalNameFromExternal(level)
 
     if "LapMinusNegative" not in config:
         config["LapMinusNegative"] = {}

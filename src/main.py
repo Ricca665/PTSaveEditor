@@ -19,13 +19,24 @@ score = 0
 keys = False
 lapminus = False
 laps = "lap 3"
-levels = ["entrance", "medieval", "ruin", "dungeon", 
+
+# Duplicate list, one with internally referenced games and another one with the friendly names
+internal_levels = ["entrance", "medieval", "ruin", "dungeon", 
                   "badland", "graveyard", "farm", "saloon",
-                   "trickytreat", "entrway", "exit", "chateau",
-                  "kidsparty", "freezer", "street", "industrial", "space", "plage",
+                   "exit", "chateau", "kidsparty", "freezer", 
+                   "street", "industrial", "space", "plage",
                   "forest", "minigolf", "sewer", "war"]
 
-bosses = ["b_pepperman", "b_vigilante", "b_noise","b_fakepep"]
+levels = ["John gutter", "Pizzascape", "Ancient Cheese", "Bloodsauce Dungeon", 
+                  "Oregano Desert", "Wasteyard", "Fun Farm", "Fastfood Saloon",
+                   "Crust Cove", "Gnome Forest", "Deep-Dish 9", "GOLF", 
+                   "The Pig City", "Peppibot Factory", "Oh Shit!", "RRF", 
+                   "Pizzascare", "DMAS", "WAR", "CTOP"]
+
+internal_bosses = ["b_pepperman", "b_vigilante", "b_noise","b_fakepep"]
+
+bosses = ["Pepperman", "Vigilante", "Noise","Fake peppino"]
+
 ranks = ["p", "s", "a", "b", "c", "d"]
 normal_lap3ranks = ["p", "s"]
 
@@ -152,6 +163,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
         dpg.add_text("Sets the appropiate ranks (and other) for each level")
     with dpg.tooltip(parent=cleanshit):
         dpg.add_text("Removes garbage data that is not important\nBut that cause this tool to not work.\nMods automatically regenerates this data")
+
 
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())
