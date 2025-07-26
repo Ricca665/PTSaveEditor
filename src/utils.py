@@ -6,7 +6,19 @@ import sys
 
 config = configparser.ConfigParser()
 
+# Configuration logic
+
 def OpenRealFileName(saveFileNumber, noise, savedatadir):
+    """Opens the save file
+
+    Args:
+        saveFileNumber (String): The save file number (so save file 1, 2 and 3)
+        noise (Boolean): If it's the noise's file
+        savedatadir (String): The save file data location
+
+    Returns:
+        String: The full save file INI path
+    """
     global saveFile
     TempsaveFile = ""
 
@@ -22,28 +34,19 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
     if noise:
         TempsaveFile = TempsaveFile.replace(".ini", "")
         TempsaveFile = TempsaveFile + "N.ini"
+
     saveFile = savedatadir+"/"+TempsaveFile
 
     try:
-        with open(saveFile, "r") as f: # Tries to open the file
-            saveFileContents = f.read() # Tries to read the file
+        with open(saveFile, "r") as f: # Tries to open and read the contents of the file
+            saveFileContents = f.read() 
         dpg.set_value("file_contents", saveFileContents)
         dpg.show_item("editSaveWindow")
     
     except Exception as e: # In case it can't
-        pymsgbox.alert(f"The save file does not exist, or a unknown error has occurred!\nTrace: \n{e}", "Error! Please contact riccar10210 on discord!") # Show the error message
+        pymsgbox.alert(f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}", "Error! Please contact riccar10210 on discord!") # Show the error message
 
     return saveFile
-
-def ReviveSnotty():
-    INISetup()
-
-    if "Game" not in config:
-        config["Game"] = {}
-
-    config["Game"]["snotty"] = '"0.000000"'  # Compares each file in the Game section and removes the snotty flag to the games sets the default one
-
-    INICloseAndWrite()
 
 def getInternalNameFromExternal(extname):
     """Gets the referenced internal name from friendly ones
@@ -115,10 +118,8 @@ def getInternalNameFromExternal(extname):
     # Default return value
     return "invalid"
 
-
 def CleanSaveFileGarbage():
-    """Cleans the save file garbage
-    """
+    """Cleans the save file garbage"""
 
     with open(saveFile, "rb") as f: # opens the file in byte mode
         saveFileData = f.read() # Read the file
@@ -167,19 +168,43 @@ def CleanSaveFileGarbage():
         f.write(saveFileCleanData)
 
 def INISetup():
+    """Sets up the INI Configuration to be read and written to"""
     CleanSaveFileGarbage()
     config.read(saveFile) # Reads the save file
     return
 
 def INICloseAndWrite():
+    """Closes and saves the new INI Configuration"""
     with open(saveFile, "w") as newSaveFile: # Opens the file
         config.write(newSaveFile) # Writes it back
-    showDoneWindow()
+    showDoneWindow() # Shows the done window
     return
 
-# Set ranks logic
+# Flag setter logic
+def ReviveSnotty():
+    INISetup()
+
+    if "Game" not in config:
+        config["Game"] = {}
+
+    config["Game"]["snotty"] = '"0.000000"'  # Sets the snotty flag to 0, meaning snotty hasn't been killed
+
+    INICloseAndWrite()
+
+def SetCTOPLappingMinusLap():
+    INISetup()
+
+    if "Unlocks" not in config:
+        config["Unlocks"] = {}
+    
+    config["Unlocks"]["minus_tctop"] = f'"1"'
+
+    INICloseAndWrite()
+
+# Ranks setter logic
 def l3dxSetRanks(level, rank, keys):
     INISetup()
+
     level = getInternalNameFromExternal(level)
 
     if "Lapped3" not in config:
@@ -193,13 +218,16 @@ def l3dxSetRanks(level, rank, keys):
 
     level = str(level)+"6" # L3DX saves the data for each level as level+6 and then the value
                            # By doing this we are doing it just once
-                           # SO if the level was "entrance" it would be entrance6
+                           # so if the level was "entrance" (AKA John gutter) it would be entrance6
 
-    config["Lapped3"][level] = f'"2.000000"'
+    config["Lapped3"][level] = f'"2.000000"' # Tell that we did indeed lap it
+
     config["3Rank"][level] = f'"{rank}"' # Rank
 
+     # The keys for each level are saved separately
+    
     if keys:
-        config["LapKey"][level] = f'"1.000000"' # The keys for each level are saved separately
+        config["LapKey"][level] = f'"1.000000"'
     else:
         config["LapKey"][level] = f'"0.000000"'
 
@@ -320,16 +348,6 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
         config["LapMinusPositive"][str(level)] = f'"{decidedrank}"' # Modify the rank
         
     INICloseAndWrite() # Close the INI and save
-
-def SetCTOPLappingMinusLap():
-    INISetup()
-
-    if "Unlocks" not in config:
-        config["Unlocks"] = {}
-    
-    config["Unlocks"]["minus_tctop"] = f'"1"'
-
-    INICloseAndWrite()
 
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
