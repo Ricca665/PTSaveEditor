@@ -10,7 +10,7 @@ import pymsgbox
 config = configparser.ConfigParser()
 player = False
 saveFile = ""
-level = "entrance"
+level = "John gutter"
 secrets = 0
 doGerome = False
 rank = "p"
@@ -18,6 +18,7 @@ lap = "lap3"
 score = 0
 keys = False
 lapminus = False
+isLunaticMode = False
 laps = "lap 3"
 
 # Duplicate list, one with internally referenced games and another one with the friendly names
@@ -75,9 +76,9 @@ def _get_rank(sender, app_data):
     rank = app_data
     return app_data
 
-def _get_lapping(sender, app_data):
-    global lap
-    lap = app_data
+def _get_lunaticmode(sender, app_data):
+    global isLunaticMode
+    isLunaticMode = app_data
     return app_data
 
 def _get_score(sender, app_data):
@@ -157,6 +158,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     dpg.add_button(label="Manually modify the save", callback=lambda: OpenRAWEditor())
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
+    lhpp = dpg.add_button(label="Edit Lap hell: Pizza pursuit save file", callback=lambda: showLHPPEditor())
     # Hover tooltips
     with dpg.tooltip(parent=snotty):
         dpg.add_text("Changes the snotty flag to revive him")
@@ -181,6 +183,7 @@ with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, n
     dpg.add_checkbox(label="Gerome treasure", callback=_get_gerome)
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetRanks(level, rank, doGerome, secrets, score))
+
 with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
@@ -190,6 +193,18 @@ with dpg.window(tag="l3dxSaveEditor", show=False, no_collapse=True, no_close=Tru
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:l3dxSetRanks(level, rank, keys))
     
+with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
+    dpg.add_button(label="Return to main screen", callback=hideRankScreen)
+    dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
+
+    dpg.add_combo(label="Lap", items=["lap 3", "lap 4", "lap 5"], callback=_get_laps, tag="lapselector4lhpp")
+    dpg.add_combo(label="Rank", items=normal_lap3ranks, callback=_get_rank, tag="rankselector4lhpp")
+
+    dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunaticmode)
+    dpg.add_spacer(height=50)
+    dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, laps, isLunaticMode))
+
+
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels, callback=_get_level)
@@ -200,6 +215,7 @@ with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=Tr
     dpg.add_spacer(height=50)
     dpg.add_button(label="Set ranks", callback=lambda:SetLapMinusRanks(level, rank, lapminus, laps))
     dpg.add_button(label="Unlock CTOP Lapping", callback=lambda:SetCTOPLappingMinusLap())
+
 #Finishing initialization
 dpg.show_viewport()
 dpg.set_primary_window("opensaveFile", True) #Setting it to primary
@@ -208,6 +224,7 @@ dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "editSaveW
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "rankSetter"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "l3dxSaveEditor"))
 dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "minusSaveWindow"))
+dpg.set_viewport_resize_callback(lambda s, a: fullscreen_window(s, a, "lhppSaveEditor"))
 
 #Once at startup
 fullscreen_window(None, None, "editSaveWindow")
@@ -215,6 +232,7 @@ fullscreen_window(None, None, "rawEditor")
 fullscreen_window(None, None, "rankSetter")
 fullscreen_window(None, None, "l3dxSaveEditor")
 fullscreen_window(None, None, "minusSaveWindow")
+fullscreen_window(None, None, "lhppSaveEditor")
 
 dpg.start_dearpygui()
 

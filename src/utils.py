@@ -232,7 +232,6 @@ def l3dxSetRanks(level, rank, keys):
         config["LapKey"][level] = f'"0.000000"'
 
     INICloseAndWrite()
-    
 
 def SetRanks(level, rank, gerome, secrets, score):
     INISetup()
@@ -349,6 +348,34 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
         
     INICloseAndWrite() # Close the INI and save
 
+def lhppSetRanks(level, rank, laps, lunatic):
+    INISetup()
+    
+    level = getInternalNameFromExternal(level)
+
+    if "LHRank-Swap" not in config:
+        config["LHRank-Swap"] = {}
+    
+    if "LapHell-Laps" not in config:
+        config["LapHell-Laps"] = {}
+
+    if "LapHell-HiScore" not in config:
+        config["LapHell-HiScore"] = {}
+    
+    if "LHRank" not in config:
+        config["LHRank"] = {}
+    
+    if "LHRank-Hell" not in config:
+        config["LHRank-Hell"] = {}
+
+    print(level)
+    print(rank)
+    print(laps)
+
+    if rank == "p":
+        pass
+    INICloseAndWrite()
+
 # dpg.hide_item hides the window
 # dpg.show_item shows the window
 def showRankScreen():
@@ -384,6 +411,10 @@ def showMinusEditor():
     dpg.hide_item("editSaveWindow")
     dpg.hide_item("l3dxSaveEditor")
     dpg.show_item("minusSaveWindow")
+
+def showLHPPEditor():
+    dpg.hide_item("editSaveWindow")
+    dpg.show_item("lhppSaveEditor")
 
 def showDoneWindow():
     #Adapted from: https://github.com/hoffstadt/DearPyGui/discussions/1002
