@@ -19,6 +19,7 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
     Returns:
         String: The full save file INI path
     """
+
     global saveFile
     TempsaveFile = ""
 
@@ -137,13 +138,24 @@ def CleanSaveFileGarbage():
     saveFileCleanData = saveFileData
 
     # Some noise shit
+    saveFileCleanData = saveFileCleanData.replace('bombtipn="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('antigravn="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_forest1N="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_hubtips7N="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage7N="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage1N="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('granny_garbage5N="1.000000"', "")
+
+    saveFileCleanData = saveFileCleanData.replace('bombtipn="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('antigravn="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_forest1N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_hubtips7N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage7N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage1N="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage5N="0.000000"', "")
-    
+
     # Some of my mess
     # In previous versions of the tool because of the replace shenanigans
     # Above me, it deleted part of the string
@@ -348,9 +360,9 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
         
     INICloseAndWrite() # Close the INI and save
 
-def lhppSetRanks(level, rank, laps, lunatic):
+def lhppSetRanks(level, rank, laps, lunatic, isSwapMode=False):
     INISetup()
-    
+
     level = getInternalNameFromExternal(level)
 
     if "LHRank-Swap" not in config:
@@ -368,12 +380,38 @@ def lhppSetRanks(level, rank, laps, lunatic):
     if "LHRank-Hell" not in config:
         config["LHRank-Hell"] = {}
 
-    print(level)
-    print(rank)
-    print(laps)
+    finallappingrank = 0
+    lunaticmodestars = 0
 
     if rank == "p":
-        pass
+        if laps == "lap 3":
+            finallappingrank = 3
+            lunaticmodestars = 4
+        elif laps == "lap 4":
+            finallappingrank = 4
+            lunaticmodestars = 5
+        elif laps == "lap 5":
+            finallappingrank = 6
+            lunaticmodestars = 6
+    else:
+        if laps == "lap 3":
+            finallappingrank = 1
+            lunaticmodestars = 1
+        elif laps == "lap 4":
+            finallappingrank = 2
+            lunaticmodestars = 2
+        elif laps == "lap 5":
+            finallappingrank = 5
+            lunaticmodestars = 3
+
+    config["LHRank"][level] = f'"{finallappingrank}"'
+
+    if lunatic:
+        config["LHRank-Hell"][level] = f'"{lunaticmodestars}"'
+    else:
+        config["LHRank-Hell"][level] = f'"0"'
+
+
     INICloseAndWrite()
 
 # dpg.hide_item hides the window

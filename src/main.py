@@ -19,6 +19,7 @@ score = 0
 keys = False
 lapminus = False
 isLunaticMode = False
+isSwapMode = False
 laps = "lap 3"
 
 # Duplicate list, one with internally referenced games and another one with the friendly names
@@ -91,6 +92,11 @@ def _get_keys(sender, app_data):
     keys = app_data
     return app_data
 
+def _get_swapmode(sender, app_data):
+    global isSwapMode
+    isSwapMode = app_data
+    return app_data
+
 def _get_lapminus(sender, app_data):
     global lapminus
     lapminus = app_data
@@ -144,10 +150,13 @@ except Exception as e:
 with dpg.window(tag="opensaveFile"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)
-    dpg.add_checkbox(label="Noise", callback=_get_player)
+    dpg.add_checkbox(label="Is Noise Save File?", callback=_get_player)
+    swap_mode = dpg.add_checkbox(label="Is Swap Mode?", callback=_get_swapmode)
     open_button = dpg.add_button(label="Open file", callback=lambda: OpenRealFileName(saveFile, player, savedatadir))
     with dpg.tooltip(parent=open_button):
         dpg.add_text("Opens the selected save file for editing")
+    with dpg.tooltip(parent=swap_mode):
+        dpg.add_text("Only used by Lap Hell: Pizza pursuit")
 
 # Main Window
 with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
@@ -202,7 +211,7 @@ with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=Tru
 
     dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunaticmode)
     dpg.add_spacer(height=50)
-    dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, laps, isLunaticMode))
+    dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, laps, isLunaticMode, isSwapMode))
 
 
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
