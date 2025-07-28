@@ -7,7 +7,8 @@ from builder_utils import *
 """Compiler options"""
 compiler = "pyinstaller" # Compiler
 compiler_flags = '--onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean --noupx ' \
-                    '--version-file=version.txt' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now 🌹🌹
+                    '--version-file=version.txt' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now
+
 libs = ["dearpygui", compiler, "pymsgbox"] # Required libraries 
 
 def main():
