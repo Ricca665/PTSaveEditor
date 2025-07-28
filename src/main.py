@@ -211,7 +211,7 @@ with dpg.window(tag="lhppSaveEditor", show=False, no_collapse=True, no_close=Tru
 
     dpg.add_checkbox(label="Lunatic mode?", callback=_get_lunaticmode)
     dpg.add_spacer(height=50)
-    dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, laps, isLunaticMode, isSwapMode))
+    dpg.add_button(label="Set ranks", callback=lambda:lhppSetRanks(level, rank, laps, isLunaticMode, player, isSwapMode))
 
 
 with dpg.window(tag="minusSaveWindow", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):

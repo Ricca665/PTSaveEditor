@@ -138,6 +138,9 @@ def CleanSaveFileGarbage():
     saveFileCleanData = saveFileData
 
     # Some noise shit
+    saveFileCleanData = saveFileCleanData.replace('balloonn="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('trashrolln="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('rocketn="1.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('bombtipn="1.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('antigravn="1.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="1.000000"', "")
@@ -147,6 +150,9 @@ def CleanSaveFileGarbage():
     saveFileCleanData = saveFileCleanData.replace('granny_garbage1N="1.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage5N="1.000000"', "")
 
+    saveFileCleanData = saveFileCleanData.replace('balloonn="1.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('trashrolln="0.000000"', "")
+    saveFileCleanData = saveFileCleanData.replace('rocketn="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('bombtipn="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('antigravn="0.000000"', "")
     saveFileCleanData = saveFileCleanData.replace('granny_garbage2N="0.000000"', "")
@@ -360,7 +366,7 @@ def SetLapMinusRanks(level, rank, islapminus, lap):
         
     INICloseAndWrite() # Close the INI and save
 
-def lhppSetRanks(level, rank, laps, lunatic, isSwapMode=False):
+def lhppSetRanks(level, rank, laps, lunatic, isNoise, isSwapMode=False):
     INISetup()
 
     level = getInternalNameFromExternal(level)
@@ -405,12 +411,15 @@ def lhppSetRanks(level, rank, laps, lunatic, isSwapMode=False):
             lunaticmodestars = 3
 
     config["LHRank"][level] = f'"{finallappingrank}"'
-
-    if lunatic:
-        config["LHRank-Hell"][level] = f'"{lunaticmodestars}"'
-    else:
-        config["LHRank-Hell"][level] = f'"0"'
-
+    if not isSwapMode:
+        if lunatic:
+            config["LHRank-Hell"][level] = f'"{lunaticmodestars}"'
+        else:
+            config["LHRank-Hell"][level] = f'"0"'
+    
+    elif isSwapMode and isNoise:
+        config["LHRank-Swap"][level] = f'"{lunaticmodestars}"'
+        
 
     INICloseAndWrite()
 
