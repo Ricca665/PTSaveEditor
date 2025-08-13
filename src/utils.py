@@ -51,8 +51,11 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
         message = f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}"
         title = "Error! Please contact riccar10210 on discord!"
         msgbox(message, title)
+        sys.exit(1)
 
+    sys.excepthook = exc
     return saveFile
+
 
 def getInternalNameFromExternal(extname):
     """Gets the referenced internal name from friendly ones
@@ -64,7 +67,8 @@ def getInternalNameFromExternal(extname):
         string: The referenced internal name (e.g. entrance)
     """
     level = extname.lower()
-    # Normal levels
+
+    # Level list
     # Floor 1
     if level == "john gutter":
         return "entrance"

@@ -140,8 +140,6 @@ except Exception as e:
                    completing the tutorial\nTrace:\n{e}""", "An error has occured!")
     sys.exit(1) # Exit
 
-sys.excepthook = exc
-print(a)
 #We initialize the buttons and other stuff
 #Tag means how internally it references itself
 #Show means to not show it at startup
