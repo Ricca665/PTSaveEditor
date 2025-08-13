@@ -1,8 +1,11 @@
 import dearpygui.dearpygui as dpg
 import configparser
 import re
-import pymsgbox
+from easygui import *
 import sys
+import simpleaudio as sa
+import webbrowser
+import pyperclip
 
 config = configparser.ConfigParser()
 
@@ -45,7 +48,9 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
         dpg.show_item("editSaveWindow")
     
     except Exception as e: # In case it can't
-        pymsgbox.alert(f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}", "Error! Please contact riccar10210 on discord!") # Show the error message
+        message = f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}"
+        title = "Error! Please contact riccar10210 on discord!"
+        msgbox(message, title)
 
     return saveFile
 
@@ -485,3 +490,20 @@ if __name__ == "__main__":
     print("Either run main.py or the compiled executable!")
     input()
     sys.exit()
+
+def exc(exc_type, exc_value, exc_tb):
+    errorType = exc_type
+    errorMessage = exc_value
+    message = f"Oh no! PTSaveEditor crashed!\nError type: {errorType}\nError Message: {exc_value}\nWould you like to copy the error message to your clipboard and open github issues?"
+    title = "Error!"
+    
+    audio = sa.WaveObject.from_wave_file('src/audio/crash.wav') # create audio obj
+    audio.play() # play audio
+
+    thing = ynbox(message, title)
+        
+    if thing:
+        pyperclip.copy(message)
+        webbrowser.open("https://github.com/Ricca665/PTSaveEditor/issues/new")
+
+    sys.exit(1)

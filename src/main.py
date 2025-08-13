@@ -140,6 +140,8 @@ except Exception as e:
                    completing the tutorial\nTrace:\n{e}""", "An error has occured!")
     sys.exit(1) # Exit
 
+sys.excepthook = exc
+print(a)
 #We initialize the buttons and other stuff
 #Tag means how internally it references itself
 #Show means to not show it at startup
@@ -147,6 +149,7 @@ except Exception as e:
 #No close means don't show the close button
 #No title bar means to not show the titlebar
 #No move means that you can't move the window 
+
 with dpg.window(tag="opensaveFile"):
     dpg.add_text("Select your save file: ")
     dpg.add_radio_button(("Save file 1", "Save file 2", "Save file 3"), callback=_get_savefile_number, horizontal=True)

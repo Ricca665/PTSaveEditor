@@ -7,7 +7,10 @@ import shlex
 def install_libs(libs):
     for lib in libs: # For each library
         print(f"Installing {lib}...") # Display the current library to install
-        subprocess.run([sys.executable, "-m", "pip", "install", lib]) # Installs the library
+        if lib == "simpleaudio":
+            subprocess.run([sys.executable, "-m", "pip", "install", "-U", "--force", "git+https://github.com/cexen/py-simple-audio.git"])
+        else:
+            subprocess.run([sys.executable, "-m", "pip", "install", "-U", lib]) # Installs the library
     
 def compile(compiler, flags):
     flags_splitted = shlex.split(flags)
