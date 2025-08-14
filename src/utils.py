@@ -54,7 +54,7 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
         message = f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}"
         title = "Error! Please contact riccar10210 on discord!"
         msgbox(message, title)
-        #sys.exit(1)
+        sys.exit(1)
 
     sys.excepthook = exc
     return saveFile
@@ -512,7 +512,6 @@ def exc(exc_type, exc_value, exc_tb):
     errorMessage = exc_value
     function = traceback.extract_tb(exc_tb)
 
-
     message = f"Oh no! PTSaveEditor crashed!\nError type: {errorType}\nError Message: {errorMessage}\nFunction called: {function[1][2]}\nAt line: {function[1][1]}\n\nWould you like to copy the error message to your clipboard and open github issues?"
     title = "Error!"
     x = threading.Thread(target=PlayAndLoopAudio, args=('src/audio/crash.wav',))
@@ -526,9 +525,16 @@ def exc(exc_type, exc_value, exc_tb):
     sys.exit(1)
 
 def PlayAndLoopAudio(path):
-    # hacky way of Playing and looping audio
-    sound = AudioSegment.from_file('src/audio/crash.wav', format="wav")
+    # hacky way of Playing and looping audio, based on pyinstaller env or nah too
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        from os import path
+        wav = path.abspath(path.join(path.dirname(__file__), 'crash.wav'))
+        sound = AudioSegment.from_file(wav, format="wav")
+    else:
+        sound = AudioSegment.from_file('src/audio/crash.wav', format="wav")
+
     playinginstance = playback._play_with_simpleaudio(sound)
+
     # Thank you intel and AMD for uhh idk making threads a real thing
     # Instead of making ONE SINGULAR thread at 9ghz (for crysis ofc)
     # Basically while true doesn't hog the main execution, so what we can do is wait until it finishes playing

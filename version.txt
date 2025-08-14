@@ -16,11 +16,11 @@ VSVersionInfo(
         '040904B0',
         [StringStruct('CompanyName', 'riccx1000'),
          StringStruct('FileDescription', 'Pizza Tower Save Editor'),
-         StringStruct('FileVersion', 'V3'),
+         StringStruct('FileVersion', ''),
          StringStruct('InternalName', 'PTSaveFileEditor'),
          StringStruct('OriginalFilename', 'PTSaveFileEditor.exe'),
-         StringStruct('ProductName', 'Pizza Tower Save Editor tool'),
-         StringStruct('ProductVersion', 'V3')])
+         StringStruct('ProductName', 'Pizza Tower Save File Editor tool'),
+         StringStruct('ProductVersion', '')])
     ]),
     VarFileInfo([VarStruct('Translation', [1033, 1200])])
   ]

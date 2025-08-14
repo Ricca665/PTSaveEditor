@@ -15,8 +15,7 @@ def install_libs(libs):
 def compile(compiler, flags):
     flags_splitted = shlex.split(flags)
     subprocess.run([compiler, *flags_splitted])
-
-
+    
 def packageExec(zipfilepath):
     try:
         os.makedirs("output")

@@ -7,7 +7,7 @@ from builder_utils import *
 """Compiler options"""
 compiler = "pyinstaller" # Compiler
 compiler_flags = '--onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean --noupx ' \
-                    '--version-file=version.txt' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now
+                    '--version-file=version.txt --add-data="src/audio/crash.wav;."' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now
 
 libs = ["dearpygui", compiler, "easygui", "pydub", "audioop-lts", "simpleaudio", "pymsgbox", "pyperclip"] # Required libraries 
 
@@ -20,7 +20,7 @@ def main():
         pass
 
     print("Step 1/3: installing required libs")
-    install_libs(libs)
+#    install_libs(libs)
     print("Finished installing libs")
 
     print("Step 2/3: Compiling program")
