@@ -6,6 +6,7 @@ import sys
 import simpleaudio as sa
 import webbrowser
 import pyperclip
+import traceback
 
 config = configparser.ConfigParser()
 
@@ -51,7 +52,7 @@ def OpenRealFileName(saveFileNumber, noise, savedatadir):
         message = f"The save file does not exist, or a unknown error has occurred!\n Stack trace: \n{e}"
         title = "Error! Please contact riccar10210 on discord!"
         msgbox(message, title)
-        sys.exit(1)
+        #sys.exit(1)
 
     sys.excepthook = exc
     return saveFile
@@ -496,9 +497,21 @@ if __name__ == "__main__":
     sys.exit()
 
 def exc(exc_type, exc_value, exc_tb):
-    errorType = exc_type
+    errorType = str(exc_type)
+    # hacky way of getting JUST the name without the class shit
+    # so it's only say 'NameError' instead of <class 'NameError'>
+    
+    errorType = errorType.replace(">", "")
+    errorType = errorType.replace("<", "")
+    errorType = errorType.replace("class", "")
+    errorType = errorType.replace("'", "")
+    errorType = errorType.strip()
+
     errorMessage = exc_value
-    message = f"Oh no! PTSaveEditor crashed!\nError type: {errorType}\nError Message: {exc_value}\nWould you like to copy the error message to your clipboard and open github issues?"
+    function = traceback.extract_tb(exc_tb)
+
+
+    message = f"Oh no! PTSaveEditor crashed!\nError type: {errorType}\nError Message: {errorMessage}\nFunction called: {function[1][2]}\nAt line: {function[1][1]}\n\nWould you like to copy the error message to your clipboard and open github issues?"
     title = "Error!"
     
     audio = sa.WaveObject.from_wave_file('src/audio/crash.wav') # create audio obj
