@@ -3,10 +3,12 @@ import configparser
 import re
 from easygui import *
 import sys
-import simpleaudio as sa
+from pydub import AudioSegment, playback
+from pydub.playback import play
 import webbrowser
 import pyperclip
 import traceback
+import threading
 
 config = configparser.ConfigParser()
 
@@ -513,10 +515,8 @@ def exc(exc_type, exc_value, exc_tb):
 
     message = f"Oh no! PTSaveEditor crashed!\nError type: {errorType}\nError Message: {errorMessage}\nFunction called: {function[1][2]}\nAt line: {function[1][1]}\n\nWould you like to copy the error message to your clipboard and open github issues?"
     title = "Error!"
-    
-    audio = sa.WaveObject.from_wave_file('src/audio/crash.wav') # create audio obj
-    audio.play() # play audio
-
+    x = threading.Thread(target=PlayAndLoopAudio, args=('src/audio/crash.wav',))
+    x.start()
     thing = ynbox(message, title)
         
     if thing:
@@ -524,3 +524,15 @@ def exc(exc_type, exc_value, exc_tb):
         webbrowser.open("https://github.com/Ricca665/PTSaveEditor/issues/new")
 
     sys.exit(1)
+
+def PlayAndLoopAudio(path):
+    # hacky way of Playing and looping audio
+    sound = AudioSegment.from_file('src/audio/crash.wav', format="wav")
+    playinginstance = playback._play_with_simpleaudio(sound)
+    # Thank you intel and AMD for uhh idk making threads a real thing
+    # Instead of making ONE SINGULAR thread at 9ghz (for crysis ofc)
+    # Basically while true doesn't hog the main execution, so what we can do is wait until it finishes playing
+    # And playing it AGAIN
+    while True:
+        playinginstance.wait_done()
+        playinginstance = playback._play_with_simpleaudio(sound)

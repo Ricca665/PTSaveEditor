@@ -9,7 +9,7 @@ compiler = "pyinstaller" # Compiler
 compiler_flags = '--onefile --windowed src/main.py --name="PTSaveFileEditor.exe" --clean --noupx ' \
                     '--version-file=version.txt' # Compiler flags, version.txt to bypass retarded AVs,  mf i have AVs now
 
-libs = ["dearpygui", compiler, "easygui", "simpleaudio", "pymsgbox", "pyperclip"] # Required libraries 
+libs = ["dearpygui", compiler, "easygui", "pydub", "audioop-lts", "simpleaudio", "pymsgbox", "pyperclip"] # Required libraries 
 
 def main():
     os.chdir(os.path.dirname(os.path.realpath(__file__))) # Enters the current directory where the builder is found, this fixes the "Script file 'src/main.py' does not exist." error when compiling
