@@ -1,4 +1,5 @@
 import dearpygui.dearpygui as dpg #Dear py gui my beloved
+import requests
 import os
 import shutil
 import sys
@@ -6,6 +7,8 @@ import configparser
 from utils import *
 import errno
 import pymsgbox
+currversiontag = "newcrashmenu"
+githubdownloads = ""
 
 config = configparser.ConfigParser()
 player = False
@@ -117,6 +120,18 @@ def fullscreen_window(sender, app_data, user_data):
     dpg.set_item_height(user_data, height)
     dpg.set_item_pos(user_data, (0, 0))  # Top-left corner
 
+# auto check for updates
+import json
+currversiontag
+request = requests.get("https://api.github.com/repos/Ricca665/PTSaveEditor/releases/latest")
+x = json.dumps(request.json())
+y = json.loads(x)
+tag_name = y["tag_name"]
+if tag_name == currversiontag:
+    print("Up to date!")
+else:
+    print(f"A new version is avaible! {tag_name}")
+sys.exit()
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
