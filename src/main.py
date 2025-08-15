@@ -122,15 +122,37 @@ def fullscreen_window(sender, app_data, user_data):
 
 # auto check for updates
 import json
-request = requests.get("https://api.github.com/repos/Ricca665/PTSaveEditor/releases/latest")
-x = json.dumps(request.json())
-y = json.loads(x)
-tag_name = y["tag_name"]
-if tag_name == currversiontag:
-    print("Up to date!")
-else:
-    print(f"A new version is avaible! {tag_name}")
-sys.exit()
+currversiontag = "s"
+try:
+    isinternet = requests.get("https://api.github.com").status_code == 200
+except:
+    isinternet = False
+
+if isinternet:
+    request = requests.get("https://api.github.com/repos/Ricca665/PTSaveEditor/releases/latest")
+    x = json.dumps(request.json())
+    y = json.loads(x)
+    tag_name = y["tag_name"]
+
+    if tag_name == currversiontag:
+        print("Up to date!")
+    else:
+        print(f"A new version is avaible! {tag_name}")
+        print("Do you want to download it?")
+        didnotinput = True
+        while didnotinput:
+            answer = input("Y/n")
+            if answer.lower() == "y":
+                print("Downloading!")
+                didnotinput = False
+                break
+            elif answer.lower() == "n":
+                print("ok")
+                didnotinput = False
+                break
+        if answer.lower() == "y":
+            requests.get("google.com")
+
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
