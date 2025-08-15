@@ -20,7 +20,7 @@ def main():
         pass
 
     print("Step 1/3: installing required libs")
-#    install_libs(libs)
+    install_libs(libs)
     print("Finished installing libs")
 
     print("Step 2/3: Compiling program")
