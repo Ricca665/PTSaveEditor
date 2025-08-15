@@ -520,7 +520,7 @@ def exc(exc_type, exc_value, exc_tb):
         
     if thing:
         pyperclip.copy(message)
-        webbrowser.open("https://github.com/Ricca665/PTSaveEditor/issues/new")
+        webbrowser.open("https://github.com/Ricca665/PTSaveEditor/issues/new?template=bug_report.md")
 
     sys.exit(1)
 
