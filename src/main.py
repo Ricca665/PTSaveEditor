@@ -122,7 +122,6 @@ def fullscreen_window(sender, app_data, user_data):
 
 # auto check for updates
 import json
-currversiontag
 request = requests.get("https://api.github.com/repos/Ricca665/PTSaveEditor/releases/latest")
 x = json.dumps(request.json())
 y = json.loads(x)
