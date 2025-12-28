@@ -30,13 +30,13 @@ internal_levels = ["entrance", "medieval", "ruin", "dungeon",
                   "badland", "graveyard", "farm", "saloon",
                    "exit", "chateau", "kidsparty", "freezer", 
                    "street", "industrial", "space", "plage",
-                  "forest", "minigolf", "sewer", "war"]
+                  "forest", "minigolf", "sewer", "war", "secretworld"]
 
 levels = ["John gutter", "Pizzascape", "Ancient Cheese", "Bloodsauce Dungeon", 
                   "Oregano Desert", "Wasteyard", "Fun Farm", "Fastfood Saloon",
                    "Crust Cove", "Gnome Forest", "Deep-Dish 9", "GOLF", 
                    "The Pig City", "Peppibot Factory", "Oh Shit!", "RRF", 
-                   "Pizzascare", "DMAS", "WAR", "CTOP"]
+                   "Pizzascare", "DMAS", "WAR", "CTOP", "SOTW"]
 
 bosses = ["Pepperman", "Vigilante", "Noise","Fake peppino"]
 
@@ -50,6 +50,7 @@ dpg.create_context()
 dpg.create_viewport(title="PT Save File Editor", width=500, height=500)
 dpg.setup_dearpygui()
 
+# Stuff to get input
 def _get_player(sender, app_data, user_data):
     global player
     player = app_data
@@ -120,50 +121,6 @@ def fullscreen_window(sender, app_data, user_data):
     dpg.set_item_height(user_data, height)
     dpg.set_item_pos(user_data, (0, 0))  # Top-left corner
 
-# auto check for updates
-import json
-currversiontag = "s"
-try:
-    #isinternet = requests.get("https://api.github.com").status_code == 200
-    isinternet = True
-except:
-    isinternet = False
-while True:
-        if isinternet:
-        
-            request = requests.get("https://api.github.com/repos/Ricca665/PTSaveEditor/releases/latest")
-            x = json.dumps(request.json())
-            y = json.loads(x)
-            if "documentation_url" in y:
-                print("API Limit reached!")
-                break
-            tag_name = y["tag_name"]
-
-            if tag_name == currversiontag:
-                print("Up to date!")
-            else:
-                print(f"A new version is avaible! {tag_name}")
-                print("Do you want to download it?")
-                didnotinput = True
-                while didnotinput:
-                    answer = input("Y/n")
-                    if answer.lower() == "y":
-                        print("Downloading!")
-                        didnotinput = False
-                        break
-                    elif answer.lower() == "n":
-                        print("ok")
-                        didnotinput = False
-                        break
-                if answer.lower() == "y":
-                    url = y["html_url"] + "/PTSaveFileEditor.zip"
-                    url = url.replace("tag", "download")
-                    print(url)
-                    break
-        else:
-            break     
-            
-sys.exit()
 try:
     appdata_dir = os.environ['APPDATA'].replace("\\", "/")
     savedatadir = appdata_dir + "/PizzaTower_GM2/saves"
@@ -216,6 +173,7 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     l3dx = dpg.add_button(label="Edit lap 3 deluxe save file", callback=lambda: showL3DXEditor())
     lapminusbutton = dpg.add_button(label="Edit Lap minus save file", callback=lambda: showMinusEditor())
     lhpp = dpg.add_button(label="Edit Lap hell: Pizza pursuit save file", callback=lambda: showLHPPEditor())
+
     # Hover tooltips
     with dpg.tooltip(parent=snotty):
         dpg.add_text("Changes the snotty flag to revive him")
@@ -224,13 +182,14 @@ with dpg.window(tag="editSaveWindow", show=False, no_collapse=True, no_close=Tru
     with dpg.tooltip(parent=cleanshit):
         dpg.add_text("Removes garbage data that is not important\nBut that cause this tool to not work.\nMods automatically regenerates this data")
 
-
+# Raw editor
 with dpg.window(tag="rawEditor", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Save and return to main screen", callback=lambda:OpenMainScreen())
     dpg.add_input_text(tag="file_contents", multiline=True, width=700, height=600)
     saveFileContents = config.read(saveFile)
     dpg.set_value("file_contents", saveFileContents)
 
+# Normal ranks
 with dpg.window(tag="rankSetter", show=False, no_collapse=True, no_close=True, no_title_bar=True, no_move=True):
     dpg.add_button(label="Return to main screen", callback=hideRankScreen)
     dpg.add_combo(label="Level selector", items=levels+bosses, callback=_get_level)

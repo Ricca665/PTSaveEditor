@@ -117,7 +117,9 @@ def getInternalNameFromExternal(extname):
         return "war"
     elif level == "ctop":
         return "exit"
-    
+    elif level == "sotw":
+        return "secretworld"
+        
     # Bosses
     elif level == "pepperman":
         return "b_pepperman"
